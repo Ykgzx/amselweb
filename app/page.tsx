@@ -1,3 +1,4 @@
+
 // app/page.tsx
 'use client';
 
@@ -6,11 +7,14 @@ import Link from 'next/link';
 import { Sparkles, Handshake, Package, Leaf, Phone, Mail, MapPin, ChevronRight, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 font-sans text-orange-900 overflow-x-hidden">
+
 
       {/* ==========================================
           HERO - ส้ม-ขาว ลอย ๆ (CSS Animation)
