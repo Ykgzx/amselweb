@@ -15,10 +15,10 @@ export default function Navbar() {
   const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const productCategories = [
-    { href: '/products/pelicoat', label: 'Pelicoat (Release Agents)' },
-    { href: '/products/antirust', label: 'Antirust Agents' },
-    { href: '/products/cleaning', label: 'Cleaning Agents' },
-    { href: '/products/lubricant', label: 'Lubricants & Others' },
+    { href: '/PelicoatSeries', label: 'Pelicoat (Release Agents)' },
+    { href: '/AntirustAgents', label: 'Antirust Agents' },
+    { href: '/CleaningAgents', label: 'Cleaning Agents' },
+    { href: '/LubricantandOthers', label: 'Lubricants & Others' },
   ];
 
   // === ฟังก์ชันเลื่อนไป #product ===
