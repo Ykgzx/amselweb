@@ -1,12 +1,13 @@
-
 'use client';
 
 import Image from 'next/image';
 import { Sparkles, Handshake, Package, Leaf, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Navbar from './components/Navbar';
 
 export default function Home() {
   return (
+    
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-orange-50 font-sans text-slate-800 overflow-x-hidden">
       
       {/* ==========================================
