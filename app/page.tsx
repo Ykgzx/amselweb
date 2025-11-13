@@ -13,7 +13,7 @@ export default function Home() {
       {/* ==========================================
           1. HERO SECTION - Modern Glassmorphism
       ========================================== */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative overflow-hidden py-24 pt-30">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-100/20 via-transparent to-orange-50/30"></div>
         <div className="absolute top-20 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-orange-400/30 to-orange-600/20 blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gradient-to-tr from-orange-300/20 to-transparent blur-3xl"></div>
@@ -121,7 +121,7 @@ export default function Home() {
       {/* ==========================================
           3. PRODUCTS SECTION - Modern Grid
       ========================================== */}
-      <section className="py-24 bg-gradient-to-t from-white to-orange-50/30">
+      <section id="product" className="py-24 bg-gradient-to-t from-white to-orange-50/30">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           
           <motion.div
@@ -130,7 +130,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl lg:text-5xl font-black text-slate-900 mb-4">
+            <h2  className="text-4xl lg:text-5xl font-black text-slate-900 mb-4">
               Our <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">Product Line</span>
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
