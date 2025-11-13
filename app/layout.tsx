@@ -46,6 +46,7 @@ export default function RootLayout({
           min-h-screen
           antialiased
         `}
+        
       >
         <Navbar />
         <main className="pt-24">{children}</main>
