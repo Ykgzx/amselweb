@@ -1,7 +1,7 @@
 export default function Navbar() {
     return (
         <>
-            <div className="fixed w-full h-[100px] flex justify-between items-center bg-linear-to-bl from-orange-500 to-amber-500 px-10">
+            <div className="fixed z-100 w-full h-[100px] flex justify-between items-center bg-linear-to-bl from-orange-500 to-amber-500 px-10">
                 <a href="/" className="flex justify-center items-center gap-5">
                     <img src="/image 1.png" className="w-20 h-20" alt="" />
                     <div>
