@@ -1,13 +1,31 @@
+// app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import  Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+// === Google Fonts ===
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"], // ใช้ในหัวข้อ
+  variable: "--font-poppins",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jakarta",
+});
 
 export const metadata: Metadata = {
-  title: "Chukyo Kasei Kogyo - Modern Solutions", // ปรับ Title 
-  description: "We provide demanding technologies to solve customer problems.",
+  title: "Chukyo Kasei Kogyo - Perfect Technology Solutions",
+  description: "We deliver cutting-edge release agents and innovative solutions for modern manufacturing.",
+  keywords: "release agents, pelicoat, antirust, cleaning agents, lubricant, chukyo kasei, amsel",
+  openGraph: {
+    title: "Chukyo Kasei Kogyo",
+    description: "Perfect demanding technologies to solve customer problems.",
+    images: ["/images/mascot.png"],
+  },
 };
 
 export default function RootLayout({
@@ -16,12 +34,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      {/* ใช้ bg-slate-50 เป็นสีพื้นหลังหลัก (สีขาวนวลๆ) 
-        เพื่อให้ Card ที่เป็นสีขาว (bg-white) ลอยเด่นขึ้นมา 
-      */}
-      <Navbar></Navbar>
-      <body className={`${inter.className} bg-slate-50`}>{children}</body>
+    <html lang="en" className={`${poppins.variable} ${jakarta.variable}`}>
+      <head>
+        {/* Preload ฟอนต์สำคัญ */}
+        <link
+          rel="preload"
+          href="/fonts/poppins-v20-latin-700.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
+
+      <body
+        className={`
+          ${jakarta.className} 
+          font-sans 
+          bg-gradient-to-br from-orange-50 via-white to-orange-50 
+          text-orange-900 
+          min-h-screen
+          antialiased
+        `}
+      >
+        <Navbar />
+        <main className="pt-24">{children}</main>
+      </body>
     </html>
   );
 }
