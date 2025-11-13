@@ -20,8 +20,7 @@ export default function RootLayout({
       {/* ใช้ bg-slate-50 เป็นสีพื้นหลังหลัก (สีขาวนวลๆ) 
         เพื่อให้ Card ที่เป็นสีขาว (bg-white) ลอยเด่นขึ้นมา 
       */}
-      <Navbar></Navbar>
-      <body className={`${inter.className} bg-slate-50`}>{children}</body>
+      <body className={`${inter.className} bg-slate-50`}><Navbar></Navbar>{children}</body>
     </html>
   );
 }
