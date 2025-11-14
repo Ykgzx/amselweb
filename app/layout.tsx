@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Poppins, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import CookieConsent from './components/CookieConsent';
 
 // === Google Fonts ===
 const poppins = Poppins({
@@ -58,7 +59,7 @@ export default function RootLayout({
         
       >
         <Navbar />
-        <main className="pt-24">{children}</main>
+        <main className="pt-24">{children} <CookieConsent /></main>
       </body>
 
     </html>
