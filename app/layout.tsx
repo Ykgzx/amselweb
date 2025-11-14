@@ -20,8 +20,10 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "Chukyo Kasei Kogyo - Perfect Technology Solutions",
-  description: "We deliver cutting-edge release agents and innovative solutions for modern manufacturing.",
-  keywords: "release agents, pelicoat, antirust, cleaning agents, lubricant, chukyo kasei, amsel",
+  description:
+    "We deliver cutting-edge release agents and innovative solutions for modern manufacturing.",
+  keywords:
+    "release agents, pelicoat, antirust, cleaning agents, lubricant, chukyo kasei, amsel",
   openGraph: {
     title: "Chukyo Kasei Kogyo",
     description: "Perfect demanding technologies to solve customer problems.",
@@ -36,23 +38,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${jakarta.variable}`}>
-      <head>
-        {/* Preload ฟอนต์สำคัญ */}
-        <link
-          rel="preload"
-          href="/fonts/poppins-v20-latin-700.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-
       <body
         className={`
-          ${jakarta.className} 
-          font-sans 
-          bg-gradient-to-br from-orange-50 via-white to-orange-50 
-          text-orange-900 
+          ${jakarta.className}
+          font-sans
+          bg-gradient-to-br from-orange-50 via-white to-orange-50
+          text-orange-900
           min-h-screen
           antialiased
         `}
@@ -61,7 +52,6 @@ export default function RootLayout({
         <Navbar />
         <main className="pt-24">{children} <CookieConsent /></main>
       </body>
-
     </html>
   );
 }
