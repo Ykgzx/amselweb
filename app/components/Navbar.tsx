@@ -68,10 +68,10 @@ export default function Navbar() {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="font-poppins font-bold text-xl bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">
+              <h1 className="font-poppins font-bold text-xl bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">
                 Chukyo Kasei Kogyo
               </h1>
-              <p className="font-jakarta text-xs text-blue-700">Perfect Technology Solutions</p>
+              <p className="font-jakarta text-xs bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">Perfect Technology Solutions</p>
             </div>
           </Link>
 
@@ -145,6 +145,13 @@ export default function Navbar() {
             >
               Regulations & Safety
             </Link>
+            <a
+              href="https://forms.gle/Ha79ggDGBAYiquuc8" // <-- ใส่ลิงก์ฟอร์มตรงนี้
+              target="_blank"
+              className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
+            >
+              Contact Form
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -217,6 +224,13 @@ export default function Navbar() {
             >
               Regulations & Safety
             </Link>
+            <a
+              href="https://forms.gle/Ha79ggDGBAYiquuc8" // <-- ใส่ลิงก์ฟอร์มตรงนี้
+              target="_blank"
+              className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
+            >
+              Contact Form
+            </a>
           </div>
         </motion.div>
       )}
