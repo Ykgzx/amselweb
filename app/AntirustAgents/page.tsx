@@ -1,9 +1,9 @@
-// app/products/pelicoat/page.tsx
+// app/products/AntirustAgents/page.tsx
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, AlertTriangle, Sparkles } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 export default function AntirustAgents() {
   return (
@@ -28,18 +28,17 @@ export default function AntirustAgents() {
       <section className="max-w-7xl mx-auto px-6 py-12">
         <div className="space-y-24">
 
-          {/* 1. Vegetable Oil-Based */}
+          {/* === SECTION 1: Volatile (เหมือนเดิม) === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+              <div className="relative group w-80 h-80">
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents.png"
-                  alt="Pelicoat Vegetable Oil"
-                  width={280}
-                  height={280}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
-                  priority
+                  alt="AntirustAgents"
+                  width={ 320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -72,17 +71,17 @@ export default function AntirustAgents() {
             </div>
           </div>
 
-          {/* 2. Fluorine-Based */}
+          {/* === SECTION 2: Sabicro === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group">
+              <div className="relative group w-80 h-80">
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-sabicro.png"
-                  alt="Pelicoat Fluorine"
-                  width={170}
-                  height={170}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
+                  alt="AntirustAgents-sabicro"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -107,17 +106,17 @@ export default function AntirustAgents() {
             </div>
           </div>
 
-          {/* 3. Silicone-Based */}
+          {/* === SECTION 3: Rakutoreru === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
+              <div className="relative group w-80 h-80">
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-raku.png"
-                  alt="Pelicoat Silicone"
-                  width={180}
-                  height={180}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
+                  alt="AntirustAgents-raku.png"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -143,24 +142,24 @@ export default function AntirustAgents() {
             </div>
           </div>
 
-          {/* 4. Special Purposes – Fatty Acid Soap */}
+          {/* === SECTION 4: Hi-Guard DK-5 === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group">
+              <div className="relative group w-80 h-80">
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-dk5.png"
-                  alt="Pelicoat Fatty Acid"
+                  alt="AntirustAgents-dk5.png"
                   width={320}
                   height={320}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
 
             <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
               <h2 className="font-poppins font-bold text-2xl text-teal-800 mb-6">
-                 Antirust agent for equipment (Powerful wax type)
+                Antirust agent for equipment (Powerful wax type)
               </h2>
               <div className="space-y-6">
                 <h3 className="font-poppins font-semibold text-lg text-teal-700 mb-3">
@@ -181,17 +180,17 @@ export default function AntirustAgents() {
             </div>
           </div>
 
-          {/* 5. Special Purposes – Modified Silicone */}
+          {/* === SECTION 5: Pelicoat 12 === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
+              <div className="relative group w-80 h-80">
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400 to-purple-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-pelicoat12.png"
                   alt="Pelicoat Modified Silicone"
-                  width={170}
-                  height={170}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -216,23 +215,24 @@ export default function AntirustAgents() {
             </div>
           </div>
 
+          {/* === SECTION 6: Legato === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group">
+              <div className="relative group w-80 h-80">
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-legato.png"
                   alt="Pelicoat Fatty Acid"
-                  width={170}
-                  height={170}
-                  className="relative rounded-full border-8 border-white shadow-2xl object-cover group-hover:scale-105 transition duration-300"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
 
             <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
               <h2 className="font-poppins font-bold text-2xl text-teal-800 mb-6">
-                 Multipurpose antirust and lubricating agent
+                Multipurpose antirust and lubricating agent
               </h2>
               <div className="space-y-6">
                 <h3 className="font-poppins font-semibold text-lg text-teal-700 mb-3">
