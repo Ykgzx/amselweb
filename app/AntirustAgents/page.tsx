@@ -17,6 +17,7 @@ const recommendations: Record<string, string> = {
 };
 
 export default function AntirustAgents() {
+  // --- Mascot Logic ---
   const [showMascot, setShowMascot] = useState<{
     any: boolean;
     currentMessage: string;
@@ -29,7 +30,6 @@ export default function AntirustAgents() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Typewriter + Auto-hide
   useEffect(() => {
     if (showMascot.any && showMascot.currentMessage) {
       const message = showMascot.currentMessage;
@@ -66,6 +66,89 @@ export default function AntirustAgents() {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
+
+  // --- Table Data Configuration ---
+  
+  // Table 1: Molds (Efflux, Sabicro, Rakutoreru)
+  const moldTableData = [
+    { 
+      name: 'Efflux F', 
+      color: 'bg-blue-100 border-l-4 border-blue-500',
+      coating: 'Solid thin coating', 
+      effective: 'Six months to one year *2', 
+      easy: '◎', 
+      app: 'Antirust for molds (semi-sealed) when oil should be avoided',
+      rowSpan: 4 
+    },
+    { 
+      name: 'Efflux Colored', 
+      color: 'bg-blue-100 border-l-4 border-blue-500',
+      coating: 'Green solid thin coating', 
+      effective: 'Six months to one year *2', 
+      easy: '◎', 
+      app: null // Merged
+    },
+    { 
+      name: 'Efflux C-Y', 
+      color: 'bg-blue-100 border-l-4 border-blue-500',
+      coating: 'Solid thin coating', 
+      effective: 'Six months to one year *2', 
+      easy: '◎', 
+      app: null // Merged
+    },
+    { 
+      name: 'Efflux C-Y Colored', 
+      color: 'bg-blue-100 border-l-4 border-blue-500',
+      coating: 'Green solid thin coating', 
+      effective: 'Six months to one year *2', 
+      easy: '◎', 
+      app: null // Merged
+    },
+    { 
+      name: 'Sabicro', 
+      color: 'bg-yellow-100 border-l-4 border-yellow-500',
+      coating: 'Semi-rigid thin film', 
+      effective: 'Three to six months', 
+      easy: '○', 
+      app: 'Antirust for molds (for long period of time)' 
+    },
+    { 
+      name: 'Rakutoreru', 
+      color: 'bg-yellow-100 border-l-4 border-yellow-500',
+      coating: 'Liquid ultra-thin coating', 
+      effective: 'One to three weeks', 
+      easy: '◎', 
+      app: 'Antirust for molds (for short period of time)' 
+    },
+  ];
+
+  // Table 2: Equipment & Multipurpose (Hi-Guard, Pelicoat 12, Legato)
+  const generalTableData = [
+    { 
+      name: 'Hi-Guard DK-5', 
+      color: 'bg-red-100 border-l-4 border-red-500',
+      coating: 'Wax thick coating', 
+      effective: 'Six months outdoors', 
+      easy: '○', 
+      app: 'Antirust for equipment' 
+    },
+    { 
+      name: 'Pelicoat 12', 
+      color: 'bg-pink-100 border-l-4 border-pink-400',
+      coating: 'Liquid thin coating', 
+      effective: 'Six months', 
+      easy: '○', 
+      app: 'Multipurpose agent for antirust and lubrication functions. Suitable for DIY' 
+    },
+    { 
+      name: 'Legato', 
+      color: 'bg-pink-100 border-l-4 border-pink-400',
+      coating: 'Liquid thin coating', 
+      effective: 'Six months', 
+      easy: '○', 
+      app: 'Multipurpose agent for antirust and lubrication functions with excellent extreme-pressure performance and abrasion resistance' 
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
@@ -330,6 +413,99 @@ export default function AntirustAgents() {
               </div>
             </div>
           </div>
+
+          {/* === SECTION 7: List of Products Tables === */}
+          <section className="py-12">
+            <h2 className="font-poppins font-bold text-4xl text-blue-900 mb-8 text-center">
+              List of Products
+            </h2>
+            
+            <div className="flex flex-col gap-12">
+              
+              {/* Table 1: Mold Agents */}
+              <div className="bg-white rounded-3xl shadow-xl border border-blue-100 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[900px] border-collapse text-left font-jakarta">
+                    <thead>
+                      <tr className="bg-slate-200 text-slate-700 text-sm uppercase tracking-wider">
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Product Name</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Coating Status</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Antirust Effective for *1</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[10%] text-center">Easiness of Removing *3</th>
+                        <th className="p-4 border-b border-slate-300 w-[30%]">Application</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {moldTableData.map((item, index) => (
+                        <tr key={index} className="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-none">
+                          <td className={`p-4 font-bold text-slate-800 border-r border-slate-200 ${item.color}`}>
+                            {item.name}
+                          </td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200">{item.coating}</td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200">{item.effective}</td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200 text-center text-lg font-bold">
+                            {item.easy === '◎' ? <span className="text-green-600">◎</span> : <span className="text-green-500">○</span>}
+                          </td>
+                          {/* Render Application cell only if it's defined (not merged) */}
+                          {item.app !== null && (
+                            <td 
+                              className="p-4 text-slate-700 align-middle bg-slate-50/50"
+                              rowSpan={item.rowSpan || 1}
+                            >
+                              {item.app}
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Table 2: General Purpose Agents */}
+              <div className="bg-white rounded-3xl shadow-xl border border-blue-100 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[900px] border-collapse text-left font-jakarta">
+                    <thead>
+                      <tr className="bg-slate-200 text-slate-700 text-sm uppercase tracking-wider">
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Product Name</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Coating Status</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[20%]">Antirust Effective for *1</th>
+                        <th className="p-4 border-b border-r border-slate-300 w-[10%] text-center">Easiness of Removing *3</th>
+                        <th className="p-4 border-b border-slate-300 w-[30%]">Application</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {generalTableData.map((item, index) => (
+                        <tr key={index} className="hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-none">
+                          <td className={`p-4 font-bold text-slate-800 border-r border-slate-200 ${item.color}`}>
+                            {item.name}
+                          </td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200">{item.coating}</td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200">{item.effective}</td>
+                          <td className="p-4 text-slate-700 border-r border-slate-200 text-center text-lg font-bold">
+                            {item.easy === '◎' ? <span className="text-green-600">◎</span> : <span className="text-green-500">○</span>}
+                          </td>
+                          <td className="p-4 text-slate-700 bg-slate-50/50">
+                            {item.app}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+            
+            {/* Legend / Notes */}
+            <div className="mt-6 text-sm text-slate-500 px-4 space-y-1 font-jakarta">
+              <p>*1: Antirust effects varies depending on conditions of use.</p>
+              <p>*2: Values when the molds are semi-sealed.</p>
+              <p>*3: ◎ = Very Easy (No preliminary shots needed), ○ = Easy (Few preliminary shots needed)</p>
+            </div>
+          </section>
+
         </div>
       </section>
 
