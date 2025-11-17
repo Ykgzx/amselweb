@@ -141,8 +141,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PRODUCTS */}
-        import Link from "next/link";
+        
 
 <section id="product" className="h-full snap-start flex items-center py-16 sm:py-24 bg-gradient-to-t from-sky-20 via-white/50 to-sky-400 border-t">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
