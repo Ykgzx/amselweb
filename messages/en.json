@@ -1,0 +1,82 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "products": "Products",
+    "law": "Law & Safety",
+    "contact": "Contact Form",
+    "pelicoat": "Pelicoat (Mold Release)",
+    "antirust": "Rust Preventives",
+    "cleaning": "Cleaning Agents",
+    "lubricant": "Lubricants & Others"
+  },
+
+  "banner": {
+    "slides": [
+      {
+        "title": "Innovative Mold Release Agents",
+        "subtitle": "Boost production efficiency, reduce waste",
+        "cta": "View Products",
+        "href": "/#product"
+      },
+      {
+        "title": "High-Quality Rust Preventives",
+        "subtitle": "Long-lasting protection for your workpieces",
+        "cta": "Contact Us",
+        "href": "mailto:info@amsel.co.th"
+      },
+      {
+        "title": "Special Formula Cleaning Agents",
+        "subtitle": "Deep clean, safe for machinery",
+        "cta": "Learn More",
+        "href": "/law"
+      }
+    ]
+  },
+
+  "hero": {
+    "title": "We deliver perfect technology",
+    "highlight": "perfect technology",
+    "description": "Solving customer challenges with innovative release agents."
+  },
+
+  "products": {
+    "title": "Our Product Line",
+    "highlight": "Product Line",
+    "subtitle": "Premium solutions trusted worldwide.",
+    "items": [
+      {
+        "title": "Pelicoat",
+        "sub": "Release Agents",
+        "desc": "For thermoplastic resin"
+      },
+      {
+        "title": "Antirust",
+        "sub": "Agents",
+        "desc": "Protection & Care"
+      },
+      {
+        "title": "Cleaning",
+        "sub": "Agents",
+        "desc": "High efficiency"
+      },
+      {
+        "title": "Lubricants",
+        "sub": "& Others",
+        "desc": "Specialized solutions"
+      }
+    ]
+  },
+
+  "footer": {
+    "quality": "Quality & Environment",
+    "iso": "ISO 9001 (1999) • ISO 14001 (2004)<br />Eco-friendly, high-performance solutions.",
+    "contact": "Contact Amsel",
+    "phone": "02-736-2096-7",
+    "email": "info@amsel.co.th",
+    "address": "14 Soi Krungthep Kreetha 31, Thap Chang, Saphan Sung, Bangkok 10250",
+    "law": "Law & Safety",
+    "company": "Chukyo Kasei Kogyo",
+    "companyDesc": "Innovating since 1950.<br />Trusted globally.",
+    "copyright": "© {year} All rights reserved."
+  }
+}
