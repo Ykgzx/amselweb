@@ -67,6 +67,258 @@
     ]
   },
 
+  "antirust": {
+    "title": "Antirust Agents",
+    "backToProducts": "Back to Products",
+    "types": {
+      "volatile": {
+        "title": "Antirust Agents for Molds (Volatile)",
+        "products": ["Efflux F", "Efflux Colored", "Efflux C-Y", "Efflux C-Y Colored"],
+        "features": "The agent forms a tight, solid covering over the mold and a layer of vaporized agent over the covering for double protection. Because the agent contains no oil, it leaves almost no stains on molded articles. The agent can be removed by applying several preliminary shots.",
+        "application": "The agent prevents rust on the molds when oil should be avoided or as a substitute for grease or antirust oil that is difficult to remove. Close the molds and then pack and seal them in a plastic bag so that the vaporized agent does not diffuse into the air but remains around the molds for the desired effect."
+      },
+      "sabicro": {
+        "title": "Antirust Agents for Molds (Oil-based)",
+        "product": "Sabicro",
+        "features": "The antirust agent for plastic molds forms a tight, semi-rigid covering over the target. This wax-type agent is less permeable so that no oil oozes in the molding process. Removing the coating is comparatively easy.",
+        "application": "Antirust for plastic and precision molds (shorter period of time)"
+      },
+      "rakutoreru": {
+        "title": "Antirust Agents for Molds (Oil-based)",
+        "product": "Rakutoreru",
+        "features": "This antirust agent for plastic and precision molds forms an ultra-thin, quick-drying coating. The agent is less sticky and has less oil oozing so that the coating is easy to remove in the molding process, which reduces the number of preliminary shots.",
+        "application": "Antirust for plastic and precision molds (shorter period of time)"
+      },
+      "hiGuardDK5": {
+        "title": "Antirust agent for equipment (Powerful wax type)",
+        "product": "Hi-Guard DK-5",
+        "features": "The agent is tack-free two to three hours after application and forms a dried coat after about one day. After coat formation, no stickiness or oil seepage will be observed and the antirust function will continue for more than six months outdoors. The agent is also appropriate for application on equipment with a complex structure because it penetrates into the minute concaves while the coat is formed.",
+        "application": "The agent achieves the antirust effect even under the harsh conditions of high humidity indoors or outdoors for a long period of time and is appropriate for export."
+      },
+      "pelicoat12": {
+        "title": "Multipurpose antirust and lubricating agent",
+        "product": "Pelicoat 12",
+        "features": "This multipurpose agent features antirust, lubricating, cleaning, and penetration functions. The agent has outstanding water displacement capabilities and antirust effects on all metals. With its low surface tension and high permeating capacity, the agent serves as a lubricant for machines, equipment, and automobile components. It also prevents fingerprints and sweat from corroding the surface.",
+        "application": "Antirust and lubrication of metal products and loosening tightly fastened bolts and nuts"
+      },
+      "legato": {
+        "title": "Multipurpose antirust and lubricating agent",
+        "product": "Legato",
+        "features": "This agent is an outstanding lubricant due to the special oil-based additive. The coating offers excellent extreme-pressure performance and abrasion resistance so that the effect lasts for a long time. With its high permeating capacity, the agent penetrates rust and dirt to easily loosen rusted bolts and nuts. A thin coat with less stickiness covers the metal surface to produce an outstanding antirust effect. The agent also displaces water and demonstrates excellent antirust performance against salt water.",
+        "application": "Maintenance of machine tools and machines for specific purposes, servicing tools, lubricating small precision equipment, loosening bolts, nuts, screws; antirust; lubrication of metal products"
+      }
+    },
+    "productTable": {
+      "title": "List of Products",
+      "headers": {
+        "productName": "Product Name",
+        "coatingStatus": "Coating Status",
+        "antirustEffective": "Antirust Effective for *1",
+        "easinessOfRemoving": "Easiness of Removing *3",
+        "application": "Application"
+      },
+      "notes": {
+        "note1": "Antirust effects vary depending on conditions of use.",
+        "note2": "Values when the molds are semi-sealed.",
+        "note3": "◎ = Very Easy (No preliminary shots needed), ○ = Easy (Few preliminary shots needed)"
+      }
+    },
+    "cta": {
+      "sds": "View Safety Data (SDS)",
+      "backToHome": "Back to Home"
+    },
+    "mascot": {
+      "recommendations": {
+        "Volatile": "Double protection with vapor layer — no oil, no stains!",
+        "Sabicro": "Semi-rigid wax coating — easy to remove, great for short-term",
+        "Rakutoreru": "Ultra-thin & quick-drying — minimal prep shots needed",
+        "Hi-Guard DK-5": "6+ months outdoor rust protection — ideal for export",
+        "Pelicoat 12": "5-in-1: antirust, lube, clean, penetrate, protect!",
+        "Legato": "Extreme pressure resistance + saltwater-proof — long-lasting"
+      }
+    }
+  },
+
+  "cleaning": {
+    "title": "Cleaning Agents",
+    "backToProducts": "Back to Products",
+    "sections": {
+      "moldCleaner": {
+        "title": "Mold cleaner",
+        "subtitle": "(multipurpose agent for molds)"
+      },
+      "moldDepositCleaner": {
+        "title": "Cleaner for mold deposit",
+        "subtitle": "Resin dissolution type"
+      },
+      "generalCleaner": {
+        "title": "General cleaner",
+        "subtitle": "(multipurpose agent for parts)"
+      }
+    },
+    "products": {
+      "gpCleaner": {
+        "title": "GP Cleaner",
+        "variants": [
+          "GP Cleaner – Standard Type (*An undiluted solution is also available.)",
+          "GP Cleaner C-Y – Chemical Attack-Resistant Type (*An undiluted solution is also available.)",
+          "GP Cleaner C-Y2 – Good Release Performance, Chemical Attack-Resistant Type (*An undiluted solution is also available.)"
+        ],
+        "features": "Multipurpose cleaning agents remove grease, oil and dirt on molds for plastics or molded articles. The agents have almost no influence on molded articles and dry quickly."
+      },
+      "aceCleanerC3": {
+        "title": "Ace Cleaner C3",
+        "features": "A cleaning agent suitable for the removal of antirust agents, grease, oil and release agents on molds for plastics. This is also for cleaning machines and is an outstanding degreasing agent."
+      },
+      "moldCleaner": {
+        "title": "Mold Cleaner",
+        "features": "This cleaning agent will dissolve and remove resin from molds for plastics.",
+        "usage": "Spray the agent thoroughly on the contaminated surface, leave for a while until it penetrates enough and then wipe off with a cloth or remove with a tool. Using the GP Cleaner is also effective.",
+        "application": "Cleaning molds for plastics"
+      },
+      "depoCleaner": {
+        "title": "Depo Cleaner",
+        "features": "Spray the agent thoroughly onto the contaminated part of a mold surface and wait three to five minutes until the agent penetrates. While the surface is still wet, give preliminary shots. The agent may remain on the surface after use, so wash it off with a solvent like the GP Cleaner. The ideal temperature of the mold is between 40 and 80°C.",
+        "application": "For gas burns on molds for plastics and removal of deposits"
+      },
+      "brakePartsCleanerC5": {
+        "title": "Brake & Parts Cleaner C5",
+        "features": "These are designed to cleanse resin or metal powder from a brake drum and lining instead of blowing the powder or resin off. The cleaner offers high spray pressure and excellent degreasing effects as an outstanding oil and grease remover.",
+        "application": "Degreasing and cleansing of general machine parts as well as brake drums, lining and disk pads"
+      },
+      "brakePartsCleanerJumboA": {
+        "title": "Brake & Parts Cleaner Jumbo A"
+      },
+      "partsCleanerC7": {
+        "title": "Parts Cleaner C7",
+        "features": "With the strong dissolving power, high spray pressure and degreasing effect, this can clean tough dirt that has accumulated for a long period of time.",
+        "application": "Cleansing parts when an engine is dismantled or machine parts with tough dirt"
+      }
+    },
+    "productTable": {
+      "title": "Product Comparison",
+      "headers": {
+        "productName": "Product name",
+        "cleansingEffectiveness": "Cleansing effectiveness *1",
+        "odor": "Odor",
+        "dryingSpeed": "Drying speed",
+        "majorApplication": "Major application"
+      },
+      "notes": {
+        "note1": "*1. Relative comparison with our products on a scale of one (weakest) to ten (strongest)"
+      }
+    },
+    "cta": {
+      "sds": "View Safety Data (SDS)",
+      "backToHome": "Back to Home"
+    },
+    "mascot": {
+      "recommendations": {
+        "GP Cleaner": "Fast-drying, low odor — perfect for daily mold cleaning!",
+        "Ace Cleaner C3": "Powerful degreasing — removes release agents & grease fast",
+        "Mold Cleaner": "Dissolves plastic residue — ideal for stubborn mold stains",
+        "Depo Cleaner": "Gas burn & deposit remover — works best at 40-80°C",
+        "Brake & Parts Cleaner C5": "High-pressure spray — great for brakes & metal parts",
+        "Brake & Parts Cleaner Jumbo A": "Same power, bigger can — for heavy-duty jobs",
+        "Parts Cleaner C7": "Maximum strength (10/10) — tackles toughest grime"
+      }
+    }
+  },
+
+  "lubricant": {
+    "title": "Lubricants & Others",
+    "backToProducts": "Back to Products",
+    "sections": {
+      "lubricantForEjectorPins": {
+        "title": "Lubricant for mold ejector pins"
+      },
+      "lubricantForSlidingSurfaces": {
+        "title": "Lubricant for sliding surfaces and bearings"
+      },
+      "antistaticAndSurfaceTreatment": {
+        "title": "Antistatic & Surface Treatment"
+      },
+      "specialReleaseAgent": {
+        "title": "Special release agent"
+      }
+    },
+    "products": {
+      "metalProtectDry": {
+        "title": "Metal Protect Dry",
+        "type": "PTFE/thin coating and dry type",
+        "temperature": "Service temperature: room temperature to 250°C",
+        "features": "This thin-coating, dry-type lubricant forms a special lubricating PTFE coating over a metal surface. With the excellent heat resistance, adhesiveness and thinness, the lubricant is appropriate for use where dirt should be avoided.",
+        "application": "Maintenance of the mold ejector pins and sliding parts of a molding machine, the rotating and sliding parts of precision machines and equipment."
+      },
+      "lubriflow": {
+        "title": "Lubriflow",
+        "type": "PTFE/oil-based and enduring type",
+        "temperature": "Service temperature: room temperature to 250°C",
+        "features": "Ultra-fine PTFE particles form a smooth covering over a metal surface for outstanding lubricity and abrasive resistance. The lubricant also offers high permeating capacity and detergency and removes water from the surface with its excellent water displacement capability, which results in an antirust effect.",
+        "application": "Maintenance of the mold ejector pins and sliding parts of a molding machine, the rotating and sliding parts of precision machines and equipment."
+      },
+      "bearlexFXC": {
+        "title": "Bearlex FX-C",
+        "features": "This fluorine lubricant is designed to minimize the influence on molded articles. The special lubricating coating has a wide service temperature range and allows application on a variety of surfaces. The thin coating is appropriate for use where dirt should be avoided and has a wide variety of uses as lubricant.",
+        "application": "The mold ejector pins and sliding parts of a molding machine and the rotating and sliding parts of precision machines"
+      },
+      "greaseKeeperWhite": {
+        "title": "Grease Keeper White",
+        "type": "Urea/Grease type",
+        "temperature": "Service temperature: -20 to 220°C",
+        "features": "This special urea grease contains carefully selected thickeners and extreme-pressure additives to achieve high-level heat resistance and lubricity. The grease has a wide service temperature range, allows application on a variety of surfaces and reduces the frequency of greasing when servicing molds.",
+        "application": "Mold guide pins, sliding parts of a molding machine and parts where load bearing capacity and the prevention of seizure and adhesion and long product life are required."
+      },
+      "highPerformanceGreaseSeries": {
+        "title": "High-Performance Grease Series",
+        "features": "This spray grease contains extreme-pressure additives and lasts for a long period of time, demonstrating outstanding abrasion, heat and pressure resistance. The grease has a wide service temperature range and produces a long-term effect as lubricant, antirust and moisture barrier on rotating and sliding metal parts."
+      },
+      "moSuperGrease": {
+        "title": "MO Super Grease"
+      },
+      "moSuperPaste": {
+        "title": "MO Super Paste"
+      },
+      "superGreaseSprayNo1": {
+        "title": "Super Grease Spray No. 1"
+      },
+      "antistaticAgentInaguard": {
+        "title": "Antistatic agent * Inaguard",
+        "features": "This spray prevents static electricity on plastic molded articles, electronic parts, films and automobile parts. Simply with a light spray, it prevents accidents, declines in production efficiency and dirt caused by static electricity.",
+        "application": "Plastics in general, electronic parts, film and automobile parts\n*May be applied to transparent resin."
+      },
+      "surfaceTreatmentAgentRestore": {
+        "title": "Surface treatment agent * Restore and Restore PP (Black)",
+        "features": "This surface treatment agent is designed to dilute or improve the appearance of molded articles. A light application hides weld lines on a pear-skin finished and grained surface or dilutes the surface.",
+        "application": "Restore and Restore PP (Black) for PP and PE"
+      },
+      "bnSpray": {
+        "title": "BN Spray",
+        "temperature": "Service temperature: room temperature to 900°C",
+        "features": "The agent contains boron nitride (BN) for excellent lubricity and release performance. With outstanding spreading capability and adhesiveness over a sliding surface and base material, the agent offers excellent lubricity in an environment of high loads.",
+        "application": "Can be used as a release agent for molding diamond tools, and lubricant and release agent for aluminum window frame molding, aluminum extruding machines and other conditions under high temperature."
+      }
+    },
+    "cta": {
+      "sds": "View Safety Data (SDS)",
+      "backToHome": "Back to Home"
+    },
+    "mascot": {
+      "recommendations": {
+        "Metal Protect Dry": "Ideal for mold nozzles, reduces dust adhesion, perfect for high-cleanliness environments!",
+        "Lubriflow": "Excellent for frequently sliding parts, reduces wear, provides rust protection!",
+        "Bearlex FX-C": "Works on all surfaces, leaves no residue, ideal for delicate and transparent work!",
+        "Grease Keeper White": "Withstands high temperatures up to 220°C, suitable for guide pins and sliding parts!",
+        "MO Super Grease": "Heavy-duty spray grease, resists high pressure and heat!",
+        "MO Super Paste": "Dense texture, long-lasting adhesion, perfect for load-bearing points!",
+        "Super Grease Spray No. 1": "Easy to spray, protects against rust, versatile for general use!",
+        "Antistatic agent * Inaguard": "Prevents static electricity in plastics, films, and electronics!",
+        "Surface treatment agent * Restore": "Repairs weld lines, restores surface to a beautiful finish!",
+        "BN Spray": "Withstands temperatures up to 900°C, ideal for aluminum casting and extrusion!"
+      }
+    }
+  },
+
   "footer": {
     "quality": "Quality & Environment",
     "iso": "ISO 9001 (1999) • ISO 14001 (2004)<br />Eco-friendly, high-performance solutions.",
