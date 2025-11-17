@@ -21,23 +21,20 @@ export default function Navbar() {
     { href: '/LubricantandOthers', label: 'Lubricants & Others' },
   ];
 
-  // === ฟังก์ชันเลื่อนไป #product ===
-  const scrollToProduct = (e: React.MouseEvent) => {
-    e.preventDefault();
+  // ฟังก์ชันเลื่อนไป #product ที่ใช้ได้จริงกับ Scroll Snap
+  const scrollToProduct = () => {
     const element = document.getElementById('product');
-    if (element) {
-      const offset = 96; // h-24 = 96px
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+    if (!element) return;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
-    setIsDropdownOpen(false);
+    // วิธีหลัก: ใช้ scrollIntoView
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // สำรอง: บังคับเลื่อนอีกรอบหลัง 300ms (ข้าม snap)
+    setTimeout(() => {
+      const yOffset = -96; // ความสูงของ navbar
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 300);
   };
 
   return (
@@ -49,13 +46,12 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="fixed inset-x-0 top-0 z-50 h-24 backdrop-blur-xl bg-white/90 border-b border-blue-100/50 shadow-lg"
       >
-        {/* Gradient ลอย ๆ ด้านหลัง */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-transparent to-sky-300/5 pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/5 to-transparent pointer-events-none"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
           
-          {/* Logo & Brand */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
@@ -77,14 +73,11 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/"
-              className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
-            >
+            <Link href="/" className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full">
               Home
             </Link>
 
-            {/* === Products Dropdown + Scroll to #product === */}
+            {/* Products Dropdown */}
             <div
               className="relative"
               onMouseEnter={() => {
@@ -92,15 +85,12 @@ export default function Navbar() {
                 setIsDropdownOpen(true);
               }}
               onMouseLeave={() => {
-                dropdownTimeout.current = setTimeout(() => {
-                  setIsDropdownOpen(false);
-                }, 150);
+                dropdownTimeout.current = setTimeout(() => setIsDropdownOpen(false), 150);
               }}
             >
-              {/* ปุ่ม Products */}
               <button
                 onClick={scrollToProduct}
-                className="flex items-center gap-1 text-blue-800 font-medium hover:text-blue-600 cursor-pointer transition"
+                className="flex items-center gap-1 text-blue-800 font-medium hover:text-blue-600 transition"
               >
                 Products
                 <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -118,9 +108,7 @@ export default function Navbar() {
                     if (dropdownTimeout.current) clearTimeout(dropdownTimeout.current);
                   }}
                   onMouseLeave={() => {
-                    dropdownTimeout.current = setTimeout(() => {
-                      setIsDropdownOpen(false);
-                    }, 150);
+                    dropdownTimeout.current = setTimeout(() => setIsDropdownOpen(false), 150);
                   }}
                 >
                   <div className="py-3">
@@ -139,15 +127,14 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link
-              href="/law"
-              className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
-            >
+            <Link href="/law" className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full">
               Regulations & Safety
             </Link>
+
             <a
-              href="https://forms.gle/Ha79ggDGBAYiquuc8" // <-- ใส่ลิงก์ฟอร์มตรงนี้
+              href="https://forms.gle/Ha79ggDGBAYiquuc8"
               target="_blank"
+              rel="noopener"
               className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
             >
               Contact Form
@@ -172,30 +159,28 @@ export default function Navbar() {
           exit={{ opacity: 0, y: -20 }}
           className="fixed inset-x-0 top-24 z-40 bg-white/95 backdrop-blur-xl border-b border-blue-100/50 shadow-2xl md:hidden"
         >
-          {/* Gradient ลอย ๆ ใน mobile */}
           <div className="absolute inset-0 bg-gradient-to-b from-blue-100/20 to-transparent pointer-events-none"></div>
 
           <div className="relative px-6 py-6 space-y-4">
-            <Link
-              href="/"
-              onClick={() => setIsOpen(false)}
-              className="block text-lg font-medium text-blue-800 hover:text-blue-600"
-            >
+            <Link href="/" onClick={() => setIsOpen(false)} className="block text-lg font-medium text-blue-800 hover:text-blue-600">
               Home
             </Link>
 
-            {/* Mobile: Products + Accordion */}
+            {/* Mobile: Products */}
             <div>
               <button
-                onClick={(e) => {
-                  scrollToProduct(e);
+                onClick={() => {
+                  scrollToProduct();
                   setIsMobileProductOpen(!isMobileProductOpen);
+                  // ปิดเมนูหลังเลื่อน (แนะนำ)
+                  setTimeout(() => setIsOpen(false), 500);
                 }}
                 className="flex w-full items-center justify-between text-lg font-medium text-blue-800 hover:text-blue-600"
               >
                 Products
                 <ChevronDown className={`w-5 h-5 transition-transform ${isMobileProductOpen ? 'rotate-180' : ''}`} />
               </button>
+
               {isMobileProductOpen && (
                 <motion.div
                   initial={{ height: 0 }}
@@ -217,17 +202,15 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link
-              href="/law"
-              onClick={() => setIsOpen(false)}
-              className="block text-lg font-medium text-blue-800 hover:text-blue-600"
-            >
+            <Link href="/law" onClick={() => setIsOpen(false)} className="block text-lg font-medium text-blue-800 hover:text-blue-600">
               Regulations & Safety
             </Link>
+
             <a
-              href="https://forms.gle/Ha79ggDGBAYiquuc8" // <-- ใส่ลิงก์ฟอร์มตรงนี้
+              href="https://forms.gle/Ha79ggDGBAYiquuc8"
               target="_blank"
-              className="text-blue-800 font-medium hover:text-blue-600 transition relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-sky-400 after:transition-all hover:after:w-full"
+              rel="noopener"
+              className="block text-lg font-medium text-blue-800 hover:text-blue-600"
             >
               Contact Form
             </a>

@@ -4,10 +4,72 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, AlertTriangle, Sparkles } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+
+// English recommendation messages
+const recommendations: Record<string, string> = {
+  'Vegetable Oil-Based': 'Perfect for secondary processing like painting — easy to clean!',
+  'Fluorine-Based': 'Partially suitable — requires heating (≥150°C) before painting',
+  'Silicone-Based': 'Not suitable for painting — silicone adheres too strongly',
+  'Fatty Acid Soap': 'Reduces memory marks & stickiness — great for clear resins!',
+  'Modified Silicone': 'Prevents stress cracks — ideal for engineering plastics',
+  'Autoben AS983': 'Automated spraying with precise control — saves time & waste!'
+};
 
 export default function PelicoatSeries() {
+  const [showMascot, setShowMascot] = useState<{
+    any: boolean;
+    currentMessage: string;
+  }>({
+    any: false,
+    currentMessage: '',
+  });
+
+  const [displayedText, setDisplayedText] = useState('');
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Typewriter + Auto-hide
+  useEffect(() => {
+    if (showMascot.any && showMascot.currentMessage) {
+      const message = showMascot.currentMessage;
+      let i = 0;
+      setDisplayedText('');
+
+      intervalRef.current = setInterval(() => {
+        if (i < message.length) {
+          setDisplayedText(message.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(intervalRef.current!);
+          // Auto-hide after 5 seconds
+          timeoutRef.current = setTimeout(() => {
+            hideMascot();
+          }, 5000);
+        }
+      }, 30);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [showMascot.any, showMascot.currentMessage]);
+
+  const callMascot = (message: string) => {
+    setShowMascot({ any: true, currentMessage: message });
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  const hideMascot = () => {
+    setShowMascot(prev => ({ ...prev, any: false }));
+    setDisplayedText('');
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
 
       {/* Hero Header */}
       <section className="text-center py-12 px-6">
@@ -34,7 +96,10 @@ export default function PelicoatSeries() {
           {/* 1. Vegetable Oil-Based */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => callMascot(recommendations['Vegetable Oil-Based'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/categories/Pelicoat.jpg"
@@ -75,7 +140,10 @@ export default function PelicoatSeries() {
           {/* 2. Fluorine-Based */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group">
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => callMascot(recommendations['Fluorine-Based'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/pelicoat/image 14.png"
@@ -113,7 +181,10 @@ export default function PelicoatSeries() {
           {/* 3. Silicone-Based */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => callMascot(recommendations['Silicone-Based'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/pelicoat/image 15.png"
@@ -142,10 +213,13 @@ export default function PelicoatSeries() {
             </div>
           </div>
 
-          {/* 4. Special Purposes – Fatty Acid Soap */}
+          {/* 4. Fatty Acid Soap */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group">
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => callMascot(recommendations['Fatty Acid Soap'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/pelicoat/peli2.png"
@@ -170,10 +244,13 @@ export default function PelicoatSeries() {
             </div>
           </div>
 
-          {/* 5. Special Purposes – Modified Silicone */}
+          {/* 5. Modified Silicone */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group">
+              <div
+                className="relative group cursor-pointer"
+                onClick={() => callMascot(recommendations['Modified Silicone'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400 to-purple-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/pelicoat/peli2.png"
@@ -205,7 +282,10 @@ export default function PelicoatSeries() {
           </div>
 
           {/* 6. Automatic Sprayer */}
-          <div className="bg-gradient-to-r from-blue-100 to-cyan-50 rounded-3xl p-12 shadow-2xl border border-blue-200">
+          <div
+            className="bg-gradient-to-r from-blue-100 to-cyan-50 rounded-3xl p-12 shadow-2xl border border-blue-200 cursor-pointer"
+            onClick={() => callMascot(recommendations['Autoben AS983'])}
+          >
             <div className="flex flex-col md:flex-row items-center gap-10">
               <div className="flex-shrink-0">
                 <Image
@@ -255,6 +335,50 @@ export default function PelicoatSeries() {
           Back to Home
         </Link>
       </div>
+
+      {/* Mascot - Bottom Center */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <div
+          className={`relative transition-all duration-700 ease-in-out transform-gpu ${
+            showMascot.any
+              ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+              : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
+          }`}
+        >
+          {/* Speech Bubble */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
+            <div className="bg-white rounded-3xl px-6 py-4 shadow-2xl border-4 border-blue-400">
+              <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">
+                {displayedText}
+              </p>
+            </div>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+              <div className="w-8 h-8 bg-white rotate-45 border-r-4 border-b-4 border-blue-400"></div>
+            </div>
+          </div>
+
+          {/* Mascot Image */}
+          <Image
+            src="/images/mascot.png"
+            alt="Mascot"
+            width={280}
+            height={280}
+            className="drop-shadow-2xl cursor-pointer animate-float"
+            onClick={hideMascot}
+          />
+        </div>
+      </div>
+
+      {/* Floating Animation */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
