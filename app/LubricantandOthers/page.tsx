@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // ข้อความแนะนำแต่ละสินค้า
 const recommendations: Record<string, string> = {
@@ -19,76 +19,51 @@ const recommendations: Record<string, string> = {
   'BN Spray': 'Withstands temperatures up to 900°C, ideal for aluminum casting and extrusion!'
 };
 
-// Component สำหรับ Mascot + ฟองคำพูด (ปรับแล้ว: ไม่ทับกัน)
-const MascotBubble = ({
-  productKey,
-  show,
-  imageOnRight,
-  borderColor,
-  textColor = 'text-green-800',
-}: {
-  productKey: string;
-  show: boolean;
-  imageOnRight: boolean;
-  borderColor: string;
-  textColor?: string;
-}) => {
-  if (!show) return null;
-
-  return (
-    <div
-      className={`absolute top-0 ${
-        imageOnRight ? 'left-0 -translate-x-1/2' : 'right-0 translate-x-1/2'
-      } -translate-y-1/2 z-20`}
-    >
-      <div className="relative">
-        {/* mascot ยกแขน */}
-        <div className="relative inline-block">
-          <Image
-            src="/images/mascot.png"
-            alt="Mascot"
-            width={250}
-            height={250}
-            className="animate-float"
-          />
-          
-        </div>
-
-        {/* ฟองคำพูด - ปรับตำแหน่งให้ไม่ทับ mascot */}
-        <div
-          className={`absolute bg-white rounded-2xl px-5 py-3 shadow-xl border min-w-56
-            ${
-              imageOnRight
-                ? '-top-16 -left-24'   // ฟองอยู่บน-ซ้ายของ mascot
-                : '-top-16 -right-24'  // ฟองอยู่บน-ขวาของ mascot
-            }`}
-          style={{ borderColor }}
-        >
-          <p className={`font-jakarta font-bold text-sm text-center leading-tight ${textColor}`}>
-            {recommendations[productKey]}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export default function LubricantandOthers() {
-  const [showMascot, setShowMascot] = useState<Record<string, boolean>>({
-    'Metal Protect Dry': false,
-    'Lubriflow': false,
-    'Bearlex FX-C': false,
-    'Grease Keeper White': false,
-    'MO Super Grease': false,
-    'MO Super Paste': false,
-    'Super Grease Spray No. 1': false,
-    'Antistatic agent * Inaguard': false,
-    'Surface treatment agent * Restore': false,
-    'BN Spray': false,
+  const [showMascot, setShowMascot] = useState<{
+    any: boolean;
+    currentMessage: string;
+  }>({
+    any: false,
+    currentMessage: '',
   });
 
-  const toggleMascot = (key: string) => {
-    setShowMascot(prev => ({ ...prev, [key]: !prev[key] }));
+  const [displayedText, setDisplayedText] = useState('');
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // จัดการ typewriter + ตั้งเวลาซ่อนหลังพิมพ์เสร็จ
+useEffect(() => {
+  if (showMascot.any && showMascot.currentMessage) {
+    const message = showMascot.currentMessage;
+    let i = 0;
+
+    setDisplayedText(''); // reset ก่อนเริ่ม
+
+    intervalRef.current = setInterval(() => {
+      if (i < message.length) {
+        setDisplayedText(message.slice(0, i + 1)); // <-- ปลอดภัย ไม่ใช้ prev
+        i++;
+      } else {
+        clearInterval(intervalRef.current!);
+      }
+    }, 30);
+  }
+
+  return () => {
+    clearInterval(intervalRef.current!);
+  };
+}, [showMascot.any, showMascot.currentMessage]);
+
+  const callMascot = (message: string) => {
+    setShowMascot({ any: true, currentMessage: message });
+  };
+
+  const hideMascot = () => {
+    setShowMascot(prev => ({ ...prev, any: false }));
+    setDisplayedText('');
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
 
   return (
@@ -119,11 +94,11 @@ export default function LubricantandOthers() {
           <div className="space-y-24">
 
             {/* 1. Metal Protect Dry - ภาพซ้าย */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('Metal Protect Dry')}
+                  onClick={() => callMascot(recommendations['Metal Protect Dry'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -155,22 +130,14 @@ export default function LubricantandOthers() {
                   </p>
                 </div>
               </div>
-
-              <MascotBubble
-                productKey="Metal Protect Dry"
-                show={showMascot['Metal Protect Dry']}
-                imageOnRight={false}
-                borderColor="#10B981"
-                textColor="text-green-800"
-              />
             </div>
 
             {/* 2. Lubriflow - ภาพขวา */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center lg:order-2">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('Lubriflow')}
+                  onClick={() => callMascot(recommendations['Lubriflow'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -202,22 +169,14 @@ export default function LubricantandOthers() {
                   rotating and sliding parts of precision machines and equipment.
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="Lubriflow"
-                show={showMascot['Lubriflow']}
-                imageOnRight={true}
-                borderColor="#F59E0B"
-                textColor="text-amber-800"
-              />
             </div>
 
             {/* 3. Bearlex FX-C - ภาพซ้าย */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('Bearlex FX-C')}
+                  onClick={() => callMascot(recommendations['Bearlex FX-C'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -244,22 +203,14 @@ export default function LubricantandOthers() {
                   rotating and sliding parts of precision machines
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="Bearlex FX-C"
-                show={showMascot['Bearlex FX-C']}
-                imageOnRight={false}
-                borderColor="#EF4444"
-                textColor="text-red-800"
-              />
             </div>
 
             {/* 4. Grease Keeper White - ภาพขวา */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center lg:order-2">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('Grease Keeper White')}
+                  onClick={() => callMascot(recommendations['Grease Keeper White'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -293,14 +244,6 @@ export default function LubricantandOthers() {
                   long product life are required.
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="Grease Keeper White"
-                show={showMascot['Grease Keeper White']}
-                imageOnRight={true}
-                borderColor="#F59E0B"
-                textColor="text-amber-800"
-              />
             </div>
 
             {/* หัวข้อใหม่ */}
@@ -330,10 +273,10 @@ export default function LubricantandOthers() {
                   { key: 'MO Super Paste', src: 'mo-paste' },
                   { key: 'Super Grease Spray No. 1', src: 'spray-No.1' }
                 ].map(({ key, src }) => (
-                  <div key={key} className="flex flex-col items-center text-center group relative">
+                  <div key={key} className="flex flex-col items-center text-center group">
                     <div
                       className="relative w-64 h-64 mb-4 cursor-pointer"
-                      onClick={() => toggleMascot(key)}
+                      onClick={() => callMascot(recommendations[key])}
                     >
                       <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                       <Image
@@ -345,23 +288,6 @@ export default function LubricantandOthers() {
                       />
                     </div>
                     <h3 className="font-poppins font-semibold text-xl text-teal-700">{key}</h3>
-
-                    {/* Mascot สำหรับ 3 อันนี้ (อยู่ด้านบนของภาพ) */}
-                    {showMascot[key] && (
-                      <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 z-20">
-                        <div className="relative">
-                          <div className="relative inline-block">
-                            <Image src="/images/mascot.png" alt="Mascot" width={80} height={80} className="rounded-full shadow-xl animate-float" />
-                            
-                          </div>
-                          <div className="absolute -top-11 -right-14 bg-white rounded-2xl px-4 py-2.5 shadow-xl border border-teal-200 min-w-48">
-                            <p className="font-jakarta font-bold text-teal-800 text-xs text-center leading-tight">
-                              {recommendations[key]}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
@@ -375,11 +301,11 @@ export default function LubricantandOthers() {
             </div>
 
             {/* Inaguard - ภาพซ้าย */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('Antistatic agent * Inaguard')}
+                  onClick={() => callMascot(recommendations['Antistatic agent * Inaguard'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -402,23 +328,15 @@ export default function LubricantandOthers() {
                   <span className="text-sm italic">*May be applied to transparent resin.</span>
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="Antistatic agent * Inaguard"
-                show={showMascot['Antistatic agent * Inaguard']}
-                imageOnRight={false}
-                borderColor="#8B5CF6"
-                textColor="text-purple-800"
-              />
             </div>
 
             {/* Restore - ภาพขวา */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center lg:order-2">
                 <div className="grid grid-cols-2 gap-6 w-full max-w-lg">
                   <div
                     className="relative group w-full h-64 cursor-pointer"
-                    onClick={() => toggleMascot('Surface treatment agent * Restore')}
+                    onClick={() => callMascot(recommendations['Surface treatment agent * Restore'])}
                   >
                     <div className="absolute -inset-1 bg-gradient-to-r from-gray-600 to-gray-400 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                     <Image
@@ -453,14 +371,6 @@ export default function LubricantandOthers() {
                   Restore and Restore PP (Black) for PP and PE
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="Surface treatment agent * Restore"
-                show={showMascot['Surface treatment agent * Restore']}
-                imageOnRight={true}
-                borderColor="#6B7280"
-                textColor="text-gray-800"
-              />
             </div>
 
             {/* Special release agent */}
@@ -471,11 +381,11 @@ export default function LubricantandOthers() {
             </div>
 
             {/* BN Spray - ภาพซ้าย */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="flex justify-center">
                 <div
                   className="relative group w-80 h-80 cursor-pointer"
-                  onClick={() => toggleMascot('BN Spray')}
+                  onClick={() => callMascot(recommendations['BN Spray'])}
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                   <Image
@@ -502,14 +412,6 @@ export default function LubricantandOthers() {
                   Can be used as a release agent for molding diamond tools, and lubricant and release agent for aluminum window frame molding, aluminum extruding machines and other conditions under high temperature.
                 </p>
               </div>
-
-              <MascotBubble
-                productKey="BN Spray"
-                show={showMascot['BN Spray']}
-                imageOnRight={false}
-                borderColor="#F97316"
-                textColor="text-orange-800"
-              />
             </div>
 
           </div>
@@ -537,6 +439,41 @@ export default function LubricantandOthers() {
             Back to Home
           </Link>
         </div>
+
+        {/* ===== Mascot กลางจอด้านล่าง - โผล่ 5 วิแล้วหายเอง ===== */}
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+          <div
+            className={`relative transition-all duration-700 ease-in-out transform-gpu ${
+              showMascot.any
+                ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+                : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
+            }`}
+          >
+            {/* ฟองคำพูด */}
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
+              <div className="bg-white rounded-3xl px-6 py-4 shadow-2xl border-4 border-blue-400">
+                <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">
+                  {displayedText}
+                </p>
+              </div>
+              {/* หางฟองชี้ลง */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+                <div className="w-8 h-8 bg-white rotate-45 border-r-4 border-b-4 border-blue-400"></div>
+              </div>
+            </div>
+
+            {/* รูป Mascot */}
+            <Image
+              src="/images/mascot.png"
+              alt="Mascot"
+              width={280}
+              height={280}
+              className="drop-shadow-2xl cursor-pointer"
+              onClick={hideMascot}
+            />
+          </div>
+        </div>
+
       </div>
 
       {/* Animation ลอยเบา ๆ */}

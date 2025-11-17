@@ -4,10 +4,71 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+
+// English recommendation messages
+const recommendations: Record<string, string> = {
+  'Volatile': 'Double protection with vapor layer — no oil, no stains!',
+  'Sabicro': 'Semi-rigid wax coating — easy to remove, great for short-term',
+  'Rakutoreru': 'Ultra-thin & quick-drying — minimal prep shots needed',
+  'Hi-Guard DK-5': '6+ months outdoor rust protection — ideal for export',
+  'Pelicoat 12': '5-in-1: antirust, lube, clean, penetrate, protect!',
+  'Legato': 'Extreme pressure resistance + saltwater-proof — long-lasting'
+};
 
 export default function AntirustAgents() {
+  const [showMascot, setShowMascot] = useState<{
+    any: boolean;
+    currentMessage: string;
+  }>({
+    any: false,
+    currentMessage: '',
+  });
+
+  const [displayedText, setDisplayedText] = useState('');
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Typewriter + Auto-hide
+  useEffect(() => {
+    if (showMascot.any && showMascot.currentMessage) {
+      const message = showMascot.currentMessage;
+      let i = 0;
+      setDisplayedText('');
+
+      intervalRef.current = setInterval(() => {
+        if (i < message.length) {
+          setDisplayedText(message.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(intervalRef.current!);
+          timeoutRef.current = setTimeout(() => {
+            hideMascot();
+          }, 5000);
+        }
+      }, 30);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [showMascot.any, showMascot.currentMessage]);
+
+  const callMascot = (message: string) => {
+    setShowMascot({ any: true, currentMessage: message });
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  const hideMascot = () => {
+    setShowMascot(prev => ({ ...prev, any: false }));
+    setDisplayedText('');
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
 
       {/* Hero Header */}
       <section className="text-center py-12 px-6">
@@ -28,15 +89,18 @@ export default function AntirustAgents() {
       <section className="max-w-7xl mx-auto px-6 py-12">
         <div className="space-y-24">
 
-          {/* === SECTION 1: Volatile (เหมือนเดิม) === */}
+          {/* === SECTION 1: Volatile === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Volatile'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents.png"
                   alt="AntirustAgents"
-                  width={ 320}
+                  width={320}
                   height={320}
                   className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
@@ -61,7 +125,7 @@ export default function AntirustAgents() {
                   <strong>Features:</strong> The agent forms a tight, solid covering over the mold and a layer of vaporized 
                   agent over the covering for double protection. Because the agent contains no oil, 
                   it leaves almost no stains on molded articles. The agent can be removed by 
-                  applying several preliminary shots <br/>
+                  applying several preliminary shots<br/>
                   <strong>Application:</strong> The agent prevents rust on the molds when oil should be avoided or as a 
                   substitute for grease or antirust oil that is difficult to remove. Close the molds and 
                   then pack and seal them in a plastic bag so that the vaporized agent does not 
@@ -74,7 +138,10 @@ export default function AntirustAgents() {
           {/* === SECTION 2: Sabicro === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Sabicro'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-sabicro.png"
@@ -99,7 +166,7 @@ export default function AntirustAgents() {
                 <p className="font-jakarta text-yellow-700 leading-relaxed text-sm">
                   <strong>Features:</strong> The antirust agent for plastic molds forms a tight, semi-rigid covering over 
                   the target. This wax-type agent is less permeable so that no oil oozes in the 
-                  molding process. Removing the coating is comparatively easy. <br/>
+                  molding process. Removing the coating is comparatively easy.<br/>
                   <strong>Application:</strong> Antirust for plastic and precision molds (shorter period of time)
                 </p>
               </div>
@@ -109,7 +176,10 @@ export default function AntirustAgents() {
           {/* === SECTION 3: Rakutoreru === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Rakutoreru'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-raku.png"
@@ -135,7 +205,7 @@ export default function AntirustAgents() {
                   <strong>Features:</strong> This antirust agent for plastic and precision molds forms an ultra-thin, 
                   quick-drying coating. The agent is less sticky and has less oil oozing so that 
                   the coating is easy to remove in the molding process, which reduces the 
-                  number of preliminary shots.  <br/>
+                  number of preliminary shots.<br/>
                   <strong>Application:</strong> Antirust for plastic and precision molds (shorter period of time)
                 </p>
               </div>
@@ -145,7 +215,10 @@ export default function AntirustAgents() {
           {/* === SECTION 4: Hi-Guard DK-5 === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Hi-Guard DK-5'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-dk5.png"
@@ -171,7 +244,7 @@ export default function AntirustAgents() {
                   be observed and the antirust function will continue for more than six months 
                   outdoors. The agent is also appropriate for application on equipment with a 
                   complex structure because it penetrates into the minute concaves while the 
-                  coat is formed. <br/>
+                  coat is formed.<br/>
                   <strong>Application:</strong> The agent achieves the antirust effect even under the harsh conditions of high 
                   humidity indoors or outdoors for a long period of time and is appropriate for 
                   export.
@@ -183,11 +256,14 @@ export default function AntirustAgents() {
           {/* === SECTION 5: Pelicoat 12 === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Pelicoat 12'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400 to-purple-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-pelicoat12.png"
-                  alt="Pelicoat Modified Silicone"
+                  alt="Pelicoat 12"
                   width={320}
                   height={320}
                   className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
@@ -208,7 +284,7 @@ export default function AntirustAgents() {
                   functions. The agent has outstanding water displacement capabilities and antirust 
                   effects on all metals. With its low surface tension and high permeating capacity, 
                   the agent serves as a lubricant for machines, equipment, and automobile 
-                  components. It also prevents fingerprints and sweat from corroding the surface. <br/>
+                  components. It also prevents fingerprints and sweat from corroding the surface.<br/>
                   <strong>Application:</strong> Antirust and lubrication of metal products and loosening tightly fastened bolts and nuts
                 </p>
               </div>
@@ -218,11 +294,14 @@ export default function AntirustAgents() {
           {/* === SECTION 6: Legato === */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Legato'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/product/AntirustAgents-legato.png"
-                  alt="Pelicoat Fatty Acid"
+                  alt="Legato"
                   width={320}
                   height={320}
                   className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
@@ -244,8 +323,8 @@ export default function AntirustAgents() {
                   effect lasts for a long time. With its high permeating capacity, the agent penetrates rust 
                   and dirt to easily loosen rusted bolts and nuts. A thin coat with less stickiness covers the 
                   metal surface to produce an outstanding antirust effect. The agent also displaces water 
-                  and demonstrates excellent antirust performance against salt water.  <br/>
-                  <strong>Application:</strong>  Maintenance of machine tools and machines for specific purposes, servicing tools, lubricating small precision equipment, 
+                  and demonstrates excellent antirust performance against salt water.<br/>
+                  <strong>Application:</strong> Maintenance of machine tools and machines for specific purposes, servicing tools, lubricating small precision equipment, 
                   loosening bolts, nuts; screws; antirust; lubrication of metal products
                 </p>
               </div>
@@ -276,6 +355,50 @@ export default function AntirustAgents() {
           Back to Home
         </Link>
       </div>
+
+      {/* Mascot - Bottom Center */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <div
+          className={`relative transition-all duration-700 ease-in-out transform-gpu ${
+            showMascot.any
+              ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+              : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
+          }`}
+        >
+          {/* Speech Bubble */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
+            <div className="bg-white rounded-3xl px-6 py-4 shadow-2xl border-4 border-blue-400">
+              <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">
+                {displayedText}
+              </p>
+            </div>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+              <div className="w-8 h-8 bg-white rotate-45 border-r-4 border-b-4 border-blue-400"></div>
+            </div>
+          </div>
+
+          {/* Mascot Image */}
+          <Image
+            src="/images/mascot.png"
+            alt="Mascot"
+            width={280}
+            height={280}
+            className="drop-shadow-2xl cursor-pointer animate-float"
+            onClick={hideMascot}
+          />
+        </div>
+      </div>
+
+      {/* Floating Animation */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }

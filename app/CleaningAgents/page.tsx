@@ -4,10 +4,72 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+
+// English recommendation messages
+const recommendations: Record<string, string> = {
+  'GP Cleaner': 'Fast-drying, low odor — perfect for daily mold cleaning!',
+  'Ace Cleaner C3': 'Powerful degreasing — removes release agents & grease fast',
+  'Mold Cleaner': 'Dissolves plastic residue — ideal for stubborn mold stains',
+  'Depo Cleaner': 'Gas burn & deposit remover — works best at 40-80°C',
+  'Brake & Parts Cleaner C5': 'High-pressure spray — great for brakes & metal parts',
+  'Brake & Parts Cleaner Jumbo A': 'Same power, bigger can — for heavy-duty jobs',
+  'Parts Cleaner C7': 'Maximum strength (10/10) — tackles toughest grime'
+};
 
 export default function CleaningAgents() {
+  const [showMascot, setShowMascot] = useState<{
+    any: boolean;
+    currentMessage: string;
+  }>({
+    any: false,
+    currentMessage: '',
+  });
+
+  const [displayedText, setDisplayedText] = useState('');
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Typewriter + Auto-hide
+  useEffect(() => {
+    if (showMascot.any && showMascot.currentMessage) {
+      const message = showMascot.currentMessage;
+      let i = 0;
+      setDisplayedText('');
+
+      intervalRef.current = setInterval(() => {
+        if (i < message.length) {
+          setDisplayedText(message.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(intervalRef.current!);
+          timeoutRef.current = setTimeout(() => {
+            hideMascot();
+          }, 5000);
+        }
+      }, 30);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [showMascot.any, showMascot.currentMessage]);
+
+  const callMascot = (message: string) => {
+    setShowMascot({ any: true, currentMessage: message });
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  const hideMascot = () => {
+    setShowMascot(prev => ({ ...prev, any: false }));
+    setDisplayedText('');
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
 
       {/* Hero Header */}
       <section className="text-center py-12 px-6">
@@ -19,7 +81,7 @@ export default function CleaningAgents() {
             </Link>
           </div>
           <h1 className="font-poppins font-bold text-5xl md:text-6xl text-blue-900 mb-4">
-            CleaningAgents
+            Cleaning Agents
           </h1>
         </div>
       </section>
@@ -34,14 +96,17 @@ export default function CleaningAgents() {
         </p>
         <div className="space-y-24">
 
-          {/* 1. Mold cleaner (multipurpose agent for molds) */}
+          {/* 1. GP Cleaner */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['GP Cleaner'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/categories/CleaningAgents.png"
-                  alt="Pelicoat Vegetable Oil"
+                  alt="GP Cleaner"
                   width={320}
                   height={320}
                   className="relative rounded-full border-8 border-white shadow-2xl object-cover w-full h-full group-hover:scale-105 transition duration-300"
@@ -79,7 +144,10 @@ export default function CleaningAgents() {
           {/* 2. Ace Cleaner C3 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Ace Cleaner C3'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/AceCleanerC3.jpg"
@@ -109,14 +177,17 @@ export default function CleaningAgents() {
           {/* 3. Mold Cleaner */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Mold Cleaner'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/MoldCleaner.jpg"
                   alt="Mold Cleaner"
                   width={320}
                   height={320}
-className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -147,14 +218,17 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
           {/* 4. Depo Cleaner */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Depo Cleaner'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/DepoCleaner.jpg"
                   alt="Depo Cleaner"
                   width={320}
                   height={320}
-className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
                 />
               </div>
             </div>
@@ -168,7 +242,7 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
                   wait three to five minutes until the agent penetrates. While the surface is still
                   wet, give preliminary shots. The agent may remain on the surface after use, so
                   wash it off with a solvent like the GP Cleaner. The ideal temperature of the mold
-                  is between 40 and 80°C. <br /><br />
+                  is between 40 and 80°C.<br /><br />
                   <strong>Application:</strong>
                   For gas burns on molds for plastics and removal of deposits
                 </p>
@@ -189,7 +263,10 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
           {/* Brake & Parts Cleaner C5 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Brake & Parts Cleaner C5'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/Brake&PartsCleanerC5.jpg"
@@ -208,7 +285,7 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
                   <strong>Features:</strong>
                   These are designed to cleanse resin or metal powder from a brake drum and lining
                   instead of blowing the powder or resin off. The cleaner offers high spray pressure
-                  and excellent degreasing effects as an outstanding oil and grease remover. <br /><br />
+                  and excellent degreasing effects as an outstanding oil and grease remover.<br /><br />
                   <strong>Application:</strong>
                   Degreasing and cleansing of general machine parts
                   as well as brake drums, lining and disk pads
@@ -220,7 +297,10 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
           {/* Brake & Parts Cleaner Jumbo A */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center lg:order-2">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Brake & Parts Cleaner Jumbo A'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/Brake&PartsCleanerJumboA.jpg"
@@ -235,7 +315,7 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
             <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
               <div className="space-y-6">
                 <h3 className="font-poppins font-semibold text-lg text-teal-700">Brake & Parts Cleaner Jumbo A</h3>
-                {/* เนื้อหาเพิ่มเติมถ้ามี */}
+                {/* Add description if available */}
               </div>
             </div>
           </div>
@@ -243,7 +323,10 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
           {/* Parts Cleaner C7 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center">
-              <div className="relative group w-80 h-80">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Parts Cleaner C7'])}
+              >
                 <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 <Image
                   src="/images/CleaningAgents/PartsCleanerC7.jpg"
@@ -383,6 +466,50 @@ className="relative rounded-full border-8 border-white shadow-2xl object-contain
           Back to Home
         </Link>
       </div>
+
+      {/* Mascot - Bottom Center */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <div
+          className={`relative transition-all duration-700 ease-in-out transform-gpu ${
+            showMascot.any
+              ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+              : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
+          }`}
+        >
+          {/* Speech Bubble */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
+            <div className="bg-white rounded-3xl px-6 py-4 shadow-2xl border-4 border-blue-400">
+              <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">
+                {displayedText}
+              </p>
+            </div>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+              <div className="w-8 h-8 bg-white rotate-45 border-r-4 border-b-4 border-blue-400"></div>
+            </div>
+          </div>
+
+          {/* Mascot Image */}
+          <Image
+            src="/images/mascot.png"
+            alt="Mascot"
+            width={280}
+            height={280}
+            className="drop-shadow-2xl cursor-pointer animate-float"
+            onClick={hideMascot}
+          />
+        </div>
+      </div>
+
+      {/* Floating Animation */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
