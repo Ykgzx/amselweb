@@ -78,5 +78,91 @@
     "company": "Chukyo Kasei Kogyo",
     "companyDesc": "Innovating since 1950.<br />Trusted globally.",
     "copyright": "© {year} All rights reserved."
+  },
+
+  "pelicoat": {
+    "backToProducts": "Back to Products",
+    "title": "Pelicoat Series",
+    "subtitle": "Release agents for thermoplastic resin",
+    "section1": {
+      "title": "Suitability For An Item That Needs Secondary Processing",
+      "suitable": "Suitable",
+      "type": "Vegetable oil-based release agents",
+      "items": [
+        "Pelicoat S (Good release performance)",
+        "Pelicoat S3-5",
+        "Pelicoat S6",
+        "Pelicoat F (For film or thin-walling molding processing)"
+      ],
+      "features": "This paintable release agent has vegetable oil as the main ingredient. It has superb release performance and is appropriate for secondary processing. Any residual agent on the product can be easily washed off with petroleum or alcohol-based general-purpose cleaners."
+    },
+    "section2": {
+      "title": "Partly Suitable – Fluorine-based release agents",
+      "partlySuitable": "Partly Suitable",
+      "items": [
+        "Pelicoat RF-1",
+        "Pelicoat FF",
+        "Pelicoat PV"
+      ],
+      "features": "This release agent contains a fluorine compound as the main ingredient. It forms a uniform film on the mold surface, provides superb release performance, and prevents the mold from becoming dirty. The agent can also be applied as a mold protecting agent. *(The agent can be used for secondary processing (painting) only after it is applied and heated (at least 150°C).)*"
+    },
+    "section3": {
+      "title": "Not Suitable – Silicone-based release agents",
+      "items": [
+        "Pelicoat α (High viscosity)",
+        "Pelicoat A",
+        "Pelicoat BX-2 (Low viscosity)"
+      ],
+      "features": "This release agent contains silicone oil as the main ingredient. It provides high heat resistance and release performance. Depending on the molding conditions, high or low viscosity can be chosen."
+    },
+    "section4": {
+      "title": "Special Purposes – Anti-memory & Less-sticky",
+      "product": "Pelicoat Z",
+      "features": "This anti-memory and less-sticky release agent contains fatty acid soap as the main ingredient. The agent is appropriate for thermoplastic resins in general as well as transparent resins."
+    },
+    "section5": {
+      "title": "Special Purposes – Stress-crack Resistant",
+      "product": "Pelicoat K Series",
+      "items": [
+        "Pelicoat K",
+        "Pelicoat KP",
+        "Pelicoat GT-1",
+        "Pelicoat GT-3"
+      ],
+      "features": "This release agent that contains modified silicone oil as the main ingredient offers outstanding release performance and minimizes stress-cracks. This general-purpose agent is resistant to heat and static and is appropriate for transparent resins and engineering plastics."
+    },
+    "section6": {
+      "title": "Automatic Release Agent Sprayer",
+      "product": "Autoben AS983 Type",
+      "note": "Mount this Pelicoat cans onto the Autoben. The system makes it easier to spray and set the spraying time and quantity. The device applies the agent appropriately and equally according to the number of shots specified."
+    },
+    "productList": "List of Products",
+    "table": {
+      "mainIngredient": "Main Ingredient",
+      "productName": "Product Name",
+      "releasePerformance": "Release Performance",
+      "dirtOnMold": "Dirt on Mold",
+      "secondaryProcessing": "Secondary Processing",
+      "coating": "Coating",
+      "plating": "Plating",
+      "hotStamping": "Hot Stamping",
+      "silkScreen": "Silk-screen"
+    },
+    "legend": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "conditional": "Conditional",
+      "notSuitable": "Not Suitable"
+    },
+    "cta": "View Safety Data (SDS)",
+    "backToHome": "Back to Home",
+    "recommendations": {
+      "Vegetable Oil-Based": "Perfect for secondary processing like painting — easy to clean!",
+      "Fluorine-Based": "Partially suitable — requires heating (≥150°C) before painting",
+      "Silicone-Based": "Not suitable for painting — silicone adheres too strongly",
+      "Fatty Acid Soap": "Reduces memory marks & stickiness — great for clear resins!",
+      "Modified Silicone": "Prevents stress cracks — ideal for engineering plastics",
+      "Autoben AS983": "Automated spraying with precise control — saves time & waste!"
+    }
   }
 }
