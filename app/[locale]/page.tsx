@@ -22,9 +22,7 @@ export default function Home() {
   const bannerImages = [
     "/images/banner1.jpg",
     "/images/banner2.png",
-    "/images/banner3.png",
-    "/images/banner4.png",
-    "/images/banner5.png"
+    "/images/banner3.png"
   ];
 
   const bannersWithImages = banners.map((item, i) => ({
@@ -167,14 +165,14 @@ export default function Home() {
         ];
         return (
           <Link key={i} href={hrefs[i]} className="group cursor-pointer">
-            <div className="bg-white/85  backdrop-blur-xl border border-blue-100/50 rounded-3xl p-5 sm:p-6 shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
+            <div className="bg-white/85 backdrop-blur-xl border border-blue-100/50 rounded-3xl p-5 sm:p-6 shadow-lg hover:shadow-2xl transition duration-300 flex flex-col h-full">
               <div className="bg-gradient-to-br from-sky-50 to-white rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 shadow-inner flex items-center justify-center h-36 sm:h-48 overflow-hidden">
                 <Image
                   src={["/images/categories/Pelicoat.jpg", "/images/categories/AntirustAgents.webp", "/images/categories/CleaningAgents.png", "/images/categories/Lubricant.png"][i]}
                   alt={p.title}
                   width={200}
                   height={200}
-                  className="object-contain group-hover:scale-110 transition rounded-full"
+                  className="object-contain group-hover:scale-110 transition"
                 />
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-blue-900 group-hover:text-blue-600 text-center">

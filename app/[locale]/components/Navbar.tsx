@@ -9,21 +9,21 @@ import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 // ภาษาที่รองรับ
-const SUPPORTED_LOCALES = ['en', 'th'] as const;
+const SUPPORTED_LOCALES = ['en', 'th', 'jp'] as const;
 type Locale = typeof SUPPORTED_LOCALES[number];
 
 // ธงชาติ
 const FLAGS: Record<Locale, string> = {
   en: '🇬🇧',
   th: '🇹🇭',
-  
+  jp: '🇯🇵',
 };
 
 // ชื่อภาษาเต็ม
 const LANGUAGE_NAMES: Record<Locale, string> = {
   en: 'English',
   th: 'ไทย',
-  
+  jp: '日本語',
 };
 
 export default function Navbar() {
