@@ -1,5 +1,5 @@
 const nextIntlConfig = {
-  locales: ['en', 'th'],
+  locales: ['en', 'th','jp'],
   defaultLocale: 'th',
   messagesDirectory: './messages',
 };

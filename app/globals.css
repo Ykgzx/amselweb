@@ -31,3 +31,23 @@ body {
 .animate-slide-up {
   animation: slide-up 0.4s ease-out forwards;
 }
+html:lang(en) {
+  font-family: 'Poppins', 'Jakarta Sans', system-ui, sans-serif;
+}
+
+/* ภาษาไทย → Kanit เต็มตัว ดูทันสมัยสุด ๆ */
+html:lang(th) {
+  font-family: 'Kanit', 'Poppins', 'Jakarta Sans', system-ui, sans-serif;
+  font-feature-settings: "liga" 0;
+  line-height: 1.6;
+}
+
+/* ภาษาญี่ปุ่น */
+html:lang(jp) {
+  font-family: 'Noto Sans JP', 'Poppins', 'Jakarta Sans', system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+/* ถ้ายังใช้ class เดิมในโค้ดอยู่ เช่น font-poppins, font-jakarta */
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-jakarta { font-family: 'Jakarta Sans', sans-serif; }
