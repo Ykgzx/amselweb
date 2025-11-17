@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ChevronLeft, AlertTriangle, Sparkles } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
-// English recommendation messages
+// English recommendation messages for Mascot
 const recommendations: Record<string, string> = {
   'Vegetable Oil-Based': 'Perfect for secondary processing like painting — easy to clean!',
   'Fluorine-Based': 'Partially suitable — requires heating (≥150°C) before painting',
@@ -17,6 +17,7 @@ const recommendations: Record<string, string> = {
 };
 
 export default function PelicoatSeries() {
+  // --- Mascot Logic ---
   const [showMascot, setShowMascot] = useState<{
     any: boolean;
     currentMessage: string;
@@ -29,7 +30,6 @@ export default function PelicoatSeries() {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Typewriter + Auto-hide
   useEffect(() => {
     if (showMascot.any && showMascot.currentMessage) {
       const message = showMascot.currentMessage;
@@ -42,7 +42,6 @@ export default function PelicoatSeries() {
           i++;
         } else {
           clearInterval(intervalRef.current!);
-          // Auto-hide after 5 seconds
           timeoutRef.current = setTimeout(() => {
             hideMascot();
           }, 5000);
@@ -67,6 +66,55 @@ export default function PelicoatSeries() {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
+
+  // --- Table Data Configuration ---
+  const tableData = [
+    {
+      category: 'Vegetable oil',
+      colorClass: 'bg-green-50 text-green-900',
+      items: [
+        { name: 'S', perf: '◎', dirt: '○', sec: ['○', '◎', '○', '○'] },
+        { name: 'S3-5', perf: '○', dirt: '○', sec: ['○', '◎', '◎', '◎'] },
+        { name: 'S6', perf: '○', dirt: '○', sec: ['◎', '◎', '◎', '◎'] },
+        { name: 'F', perf: '○', dirt: '○', sec: ['◎', '◎', '◎', '◎'] },
+      ]
+    },
+    {
+      category: 'Fluorine',
+      colorClass: 'bg-blue-50 text-blue-900',
+      items: [
+        { name: 'RF-1', perf: '◎', dirt: '◎', sec: ['△', '△', '△', '△'] },
+        { name: 'FF', perf: '◎', dirt: '◎', sec: ['△', '△', '△', '△'] },
+        { name: 'PV', perf: '○', dirt: '◎', sec: ['×', '×', '×', '×'] },
+      ]
+    },
+    {
+      category: 'Silicone α',
+      colorClass: 'bg-gray-50 text-gray-900',
+      items: [
+        { name: 'α', perf: '◎', dirt: '○', sec: ['×', '×', '×', '×'] },
+        { name: 'A', perf: '◎', dirt: '○', sec: ['×', '×', '×', '×'] },
+        { name: 'BX-2', perf: '◎', dirt: '○', sec: ['×', '×', '×', '×'] },
+      ]
+    },
+    {
+      category: 'Fatty acid soap',
+      colorClass: 'bg-teal-50 text-teal-900',
+      items: [
+        { name: 'Z', perf: '○', dirt: '○', sec: ['○', '○', '○', '○'] },
+      ]
+    },
+    {
+      category: 'Modified silicone',
+      colorClass: 'bg-indigo-50 text-indigo-900',
+      items: [
+        { name: 'K', perf: '◎', dirt: '◎', sec: ['△', '×', '×', '×'] },
+        { name: 'KP', perf: '○', dirt: '◎', sec: ['×', '×', '×', '×'] },
+        { name: 'GT-1', perf: '○', dirt: '◎', sec: ['△', '×', '×', '×'] },
+        { name: 'GT-3', perf: '○', dirt: '◎', sec: ['△', '×', '×', '×'] },
+      ]
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
@@ -310,6 +358,80 @@ export default function PelicoatSeries() {
             </div>
           </div>
 
+          {/* 7. Product List Table (New Section from Image) */}
+          <section className="py-12">
+            <h2 className="font-poppins font-bold text-4xl text-blue-900 mb-8 text-center">
+              List of Products
+            </h2>
+
+            <div className="bg-white rounded-3xl shadow-xl border border-blue-100 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[800px] border-collapse text-center font-jakarta">
+                  <thead>
+                    {/* Top Header Row */}
+                    <tr className="bg-slate-200 text-slate-700 text-sm uppercase tracking-wider">
+                      <th rowSpan={2} className="p-4 border-b border-r border-slate-300 w-1/6">Main Ingredient</th>
+                      <th rowSpan={2} className="p-4 border-b border-r border-slate-300">Product Name</th>
+                      <th rowSpan={2} className="p-4 border-b border-r border-slate-300">Release Performance</th>
+                      <th rowSpan={2} className="p-4 border-b border-r border-slate-300">Dirt on Mold</th>
+                      <th colSpan={4} className="p-3 border-b border-slate-300 bg-slate-300/50">Secondary Processing</th>
+                    </tr>
+                    {/* Sub Header Row */}
+                    <tr className="bg-slate-200 text-slate-700 text-xs uppercase tracking-wider font-bold">
+                      <th className="p-2 border-b border-r border-slate-300 w-[10%]">Coating</th>
+                      <th className="p-2 border-b border-r border-slate-300 w-[10%]">Plating</th>
+                      <th className="p-2 border-b border-r border-slate-300 w-[10%]">Hot Stamping</th>
+                      <th className="p-2 border-b border-slate-300 w-[10%]">Silk-screen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData.map((group, gIndex) => (
+                      group.items.map((item, iIndex) => (
+                        <tr key={`${group.category}-${item.name}`} className="hover:bg-slate-50 transition-colors">
+                          {/* Render Category only for the first item in the group */}
+                          {iIndex === 0 && (
+                            <td
+                              rowSpan={group.items.length}
+                              className={`p-4 font-bold text-left border-r border-b border-slate-200 ${group.colorClass}`}
+                            >
+                              {group.category}
+                            </td>
+                          )}
+
+                          <td className="p-3 border-r border-b border-slate-200 font-semibold text-blue-900">{item.name}</td>
+                          <td className="p-3 border-r border-b border-slate-200 text-lg">{item.perf}</td>
+                          <td className="p-3 border-r border-b border-slate-200 text-lg">{item.dirt}</td>
+
+                          {/* Secondary Processing Columns */}
+                          {item.sec.map((val, idx) => (
+                            <td key={idx} className={`p-3 border-b border-slate-200 text-lg ${idx < 3 ? 'border-r' : ''}`}>
+                              <span className={
+                                val === '◎' ? 'text-green-600 font-bold' :
+                                  val === '○' ? 'text-green-500' :
+                                    val === '△' ? 'text-yellow-500' :
+                                      'text-red-400'
+                              }>
+                                {val}
+                              </span>
+                            </td>
+                          ))}
+                        </tr>
+                      ))
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Legend */}
+              <div className="bg-slate-50 p-4 text-sm text-slate-500 flex flex-wrap gap-6 justify-center border-t border-slate-200">
+                <span className="flex items-center gap-1"><span className="text-green-600 font-bold text-lg">◎</span> Excellent</span>
+                <span className="flex items-center gap-1"><span className="text-green-500 text-lg">○</span> Good</span>
+                <span className="flex items-center gap-1"><span className="text-yellow-500 text-lg">△</span> Conditional</span>
+                <span className="flex items-center gap-1"><span className="text-red-400 text-lg">×</span> Not Suitable</span>
+              </div>
+            </div>
+          </section>
+
         </div>
       </section>
 
@@ -339,11 +461,10 @@ export default function PelicoatSeries() {
       {/* Mascot - Bottom Center */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
         <div
-          className={`relative transition-all duration-700 ease-in-out transform-gpu ${
-            showMascot.any
+          className={`relative transition-all duration-700 ease-in-out transform-gpu ${showMascot.any
               ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
               : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
-          }`}
+            }`}
         >
           {/* Speech Bubble */}
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
