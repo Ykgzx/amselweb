@@ -5,50 +5,59 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { useTranslations } from 'next-intl';
+
+// English recommendation messages
+const recommendations: Record<string, string> = {
+  'GP Cleaner': 'Fast-drying, low odor — perfect for daily mold cleaning!',
+  'Ace Cleaner C3': 'Powerful degreasing — removes release agents & grease fast',
+  'Mold Cleaner': 'Dissolves plastic residue — ideal for stubborn mold stains',
+  'Depo Cleaner': 'Gas burn & deposit remover — works best at 40-80°C',
+  'Brake & Parts Cleaner C5': 'High-pressure spray — great for brakes & metal parts',
+  'Brake & Parts Cleaner Jumbo A': 'Same power, bigger can — for heavy-duty jobs',
+  'Parts Cleaner C7': 'Maximum strength (10/10) — tackles toughest grime'
+};
 
 export default function CleaningAgents() {
-  const t = useTranslations('cleaning');
-
-  // ──────── Mascot Logic (แก้บัค 100% – ใช้แบบ Pelicoat) ────────
-  const [showMascot, setShowMascot] = useState<{ any: boolean; currentMessage: string }>({
+  const [showMascot, setShowMascot] = useState<{
+    any: boolean;
+    currentMessage: string;
+  }>({
     any: false,
     currentMessage: '',
   });
+
   const [displayedText, setDisplayedText] = useState('');
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Typewriter + Auto-hide
   useEffect(() => {
     if (showMascot.any && showMascot.currentMessage) {
       const message = showMascot.currentMessage;
       let i = 0;
-      setDisplayedText(''); // รีเซ็ตก่อนเริ่มพิมพ์
+      setDisplayedText('');
 
       intervalRef.current = setInterval(() => {
         if (i < message.length) {
-          // ใช้ slice แทน prev + char → แก้บัคถาวร
           setDisplayedText(message.slice(0, i + 1));
           i++;
         } else {
           clearInterval(intervalRef.current!);
-          // ซ่อนอัตโนมัติหลัง 5 วินาที
-          timeoutRef.current = setTimeout(() => hideMascot(), 5000);
+          timeoutRef.current = setTimeout(() => {
+            hideMascot();
+          }, 5000);
         }
       }, 30);
     }
 
-    // cleanup เมื่อ component unmount หรือ message เปลี่ยน
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [showMascot.any, showMascot.currentMessage]);
 
-  const callMascot = (key: string) => {
-    const message = t(`recommendations.${key}`);
+  const callMascot = (message: string) => {
     setShowMascot({ any: true, currentMessage: message });
-    // เคลียร์ timeout เก่าเพื่อไม่ให้ซ่อนก่อนพิมพ์จบ
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
 
@@ -58,204 +67,448 @@ export default function CleaningAgents() {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
   };
-  // ─────────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-white to-sky-400 font-sans text-blue-900 pt-24 pb-16 relative">
 
-      {/* Header */}
+      {/* Hero Header */}
       <section className="text-center py-12 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 text-blue-600 mb-6">
             <Link href="/#product" className="flex items-center gap-1 hover:text-blue-500 transition">
               <ChevronLeft className="w-5 h-5" />
-              {t('backToProducts')}
+              Back to Products
             </Link>
           </div>
           <h1 className="font-poppins font-bold text-5xl md:text-6xl text-blue-900 mb-4">
-            {t('title')}
+            Cleaning Agents
           </h1>
         </div>
       </section>
 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-6 py-12">
+        <h1 className="font-bold text-5xl md:text-6xl">
+          Mold cleaner
+        </h1>
+        <p className="font-bold text-xl md:text-xl mt-2">
+          (multipurpose agent for molds)
+        </p>
         <div className="space-y-24">
 
-          {/* Mold Cleaner Section */}
-          <div>
-            <h2 className="font-poppins font-bold text-5xl md:text-6xl text-blue-900 mb-2">{t('moldCleaner')}</h2>
-            <p className="font-bold text-xl text-blue-700 mb-12">{t('moldCleanerSub')}</p>
-
-            {/* GP Cleaner */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-              <div className="flex justify-center">
-                <div className="relative group w-80 h-80 cursor-pointer" onClick={() => callMascot('GP Cleaner')}>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                  <Image src="/images/categories/CleaningAgents.png" alt="GP Cleaner" width={320} height={320}
-                    className="relative rounded-full border-8 border-white shadow-2xl object-cover w-full h-full group-hover:scale-105 transition" />
-                </div>
+          {/* 1. GP Cleaner */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['GP Cleaner'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/categories/CleaningAgents.png"
+                  alt="GP Cleaner"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-cover w-full h-full group-hover:scale-105 transition duration-300"
+                  priority
+                />
               </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-green-200 rounded-3xl p-10 shadow-xl">
-                <ul className="font-jakarta text-green-700 space-y-3 list-disc list-inside">
-                  {t.raw('gp.items').map((item: string) => <li key={item} dangerouslySetInnerHTML={{ __html: item }} />)}
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-green-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="space-y-6">
+                <ul className="font-jakarta text-green-700 space-y-2 list-disc list-inside">
+                  <li>
+                    <strong>GP Cleaner – Standard Type</strong><br />
+                    <span className="text-green-600">(*An undiluted solution is also available.)</span>
+                  </li>
+                  <li>
+                    <strong>GP Cleaner C-Y – Chemical Attack-Resistant Type</strong><br />
+                    <span className="text-green-600">(*An undiluted solution is also available.)</span>
+                  </li>
+                  <li>
+                    <strong>GP Cleaner C-Y2 – Good Release Performance, Chemical Attack-Resistant Type</strong><br />
+                    <span className="text-green-600">(*An undiluted solution is also available.)</span>
+                  </li>
                 </ul>
-                <p className="font-jakarta text-green-700 leading-relaxed mt-6"><strong>Features:</strong> {t('gp.features')}</p>
-              </div>
-            </div>
-
-            {/* Ace Cleaner C3 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-              <div className="flex justify-center lg:order-2">
-                <div className="relative group w-80 h-80 cursor-pointer" onClick={() => callMascot('Ace Cleaner C3')}>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                  <Image src="/images/CleaningAgents/AceCleanerC3.jpg" alt="Ace Cleaner C3" width={320} height={320}
-                    className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition" />
-                </div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-yellow-200 rounded-3xl p-10 shadow-xl lg:order-1">
-                <h3 className="font-poppins font-bold text-2xl text-yellow-800 mb-4">{t('ace.title')}</h3>
-                <p className="font-jakarta text-yellow-700 leading-relaxed"><strong>Features:</strong> {t('ace.features')}</p>
-              </div>
-            </div>
-
-            {/* Mold Cleaner */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-              <div className="flex justify-center">
-                <div className="relative group w-80 h-80 cursor-pointer" onClick={() => callMascot('Mold Cleaner')}>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                  <Image src="/images/CleaningAgents/MoldCleaner.jpg" alt="Mold Cleaner" width={320} height={320}
-                    className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition" />
-                </div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-red-200 rounded-3xl p-10 shadow-xl">
-                <h3 className="font-poppins font-bold text-2xl text-red-800 mb-4">{t('mold.title')}</h3>
-                <p className="font-jakarta text-red-700 leading-relaxed">
-                  <strong>Features:</strong> {t('mold.features')}<br/>
-                  <strong>Application:</strong> {t('mold.application')}
+                <p className="font-jakarta text-green-700 leading-relaxed">
+                  <strong>Features:</strong>
+                  Multipurpose cleaning agents remove grease, oil and dirt on
+                  molds for plastics or molded articles. The agents have
+                  almost no influence on molded articles and dry quickly.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Deposit Cleaner Section */}
-          <div>
-            <h2 className="font-poppins font-bold text-5xl md:text-6xl text-blue-900 mb-2">{t('depositCleaner')}</h2>
-            <p className="font-bold text-xl text-blue-700 mb-12">{t('depositCleanerSub')}</p>
-
-            {/* Depo Cleaner */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-              <div className="flex justify-center lg:order-2">
-                <div className="relative group w-80 h-80 cursor-pointer" onClick={() => callMascot('Depo Cleaner')}>
-                  <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                  <Image src="/images/CleaningAgents/DepoCleaner.jpg" alt="Depo Cleaner" width={320} height={320}
-                    className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition" />
-                </div>
+          {/* 2. Ace Cleaner C3 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center lg:order-2">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Ace Cleaner C3'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-amber-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/AceCleanerC3.jpg"
+                  alt="Ace Cleaner C3"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
               </div>
-              <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl lg:order-1">
-                <h3 className="font-poppins font-bold text-2xl text-teal-800 mb-4">{t('depo.title')}</h3>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-yellow-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
+              <h2 className="font-poppins font-bold text-2xl text-yellow-800 mb-6">
+                Ace Cleaner C3
+              </h2>
+              <p className="font-jakarta text-yellow-700 leading-relaxed text-md">
+                <strong>Features:</strong>
+                A cleaning agent suitable for the removal of
+                antirust agents, grease, oil and release
+                agents on molds for plastics. This is also for
+                cleaning machines and is an outstanding
+                degreasing agent
+              </p>
+            </div>
+          </div>
+
+          {/* 3. Mold Cleaner */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Mold Cleaner'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/MoldCleaner.jpg"
+                  alt="Mold Cleaner"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
+              </div>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-red-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <h2 className="font-poppins font-bold text-2xl text-red-800 mb-6">
+                Mold Cleaner
+              </h2>
+              <p className="font-jakarta text-red-700 leading-relaxed">
+                <strong>Features:</strong> This cleaning agent will dissolve and remove resin from molds for plastics.
+                * Spray the agent thoroughly on the contaminated surface, leave for a while until it
+                penetrates enough and then wipe off with a cloth or remove with a tool. Using the GP
+                Cleaner is also effective.<br /><br />
+                <strong>Application:</strong>Cleaning molds for plastics
+              </p>
+            </div>
+          </div>
+
+          <div className="font-poppins text-blue-900 mb-8">
+            <h1 className="font-bold text-5xl md:text-6xl">
+              Cleaner for mold deposit
+            </h1>
+            <p className="font-bold text-xl md:text-xl mt-2">
+              Resin dissolution type
+            </p>
+          </div>
+
+          {/* 4. Depo Cleaner */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center lg:order-2">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Depo Cleaner'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/DepoCleaner.jpg"
+                  alt="Depo Cleaner"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
+              </div>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
+              <div className="space-y-6">
+                <h3 className="font-poppins font-semibold text-lg text-teal-700 mb-3">Depo Cleaner</h3>
                 <p className="font-jakarta text-teal-700 leading-relaxed">
-                  <strong>Features:</strong> {t('depo.features')}<br/>
-                  <strong>Application:</strong> {t('depo.application')}
+                  <strong>Features:</strong>
+                  Spray the agent thoroughly onto the contaminated part of a mold surface and
+                  wait three to five minutes until the agent penetrates. While the surface is still
+                  wet, give preliminary shots. The agent may remain on the surface after use, so
+                  wash it off with a solvent like the GP Cleaner. The ideal temperature of the mold
+                  is between 40 and 80°C.<br /><br />
+                  <strong>Application:</strong>
+                  For gas burns on molds for plastics and removal of deposits
                 </p>
               </div>
             </div>
           </div>
 
-          {/* General Cleaner Section */}
-          <div>
-            <h2 className="font-poppins font-bold text-5xl md:text-6xl text-blue-900 mb-2">{t('generalCleaner')}</h2>
-            <p className="font-bold text-xl text-blue-700 mb-12">{t('generalCleanerSub')}</p>
-
-            {/* Brake C5, Jumbo A, Parts C7 */}
-            {['brakeC5', 'brakeJumbo', 'partsC7'].map((key, i) => (
-              <div key={key} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
-                <div className={`flex justify-center ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="relative group w-80 h-80 cursor-pointer" onClick={() => callMascot(key === 'brakeC5' ? 'Brake & Parts Cleaner C5' : key === 'brakeJumbo' ? 'Brake & Parts Cleaner Jumbo A' : 'Parts Cleaner C7')}>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                    <Image src={`/images/CleaningAgents/${key === 'brakeC5' ? 'Brake&PartsCleanerC5' : key === 'brakeJumbo' ? 'Brake&PartsCleanerJumboA' : 'PartsCleanerC7'}.jpg`} alt={t(`${key}.title`)} width={320} height={320}
-                      className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition" />
-                  </div>
-                </div>
-                <div className={`bg-white/80 backdrop-blur-xl border ${i === 2 ? 'border-red-200' : 'border-teal-200'} rounded-3xl p-10 shadow-xl ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <h3 className={`font-poppins font-bold text-2xl mb-4 ${i === 2 ? 'text-red-800' : 'text-teal-800'}`}>
-                    {t(`${key}.title`)}
-                  </h3>
-                  <p className={`font-jakarta leading-relaxed ${i === 2 ? 'text-red-700' : 'text-teal-700'}`}>
-                    <strong>Features:</strong> {t(`${key}.features`)}<br/>
-                    {t.raw(`${key}.application`) && <><strong>Application:</strong> {t(`${key}.application`)}</>}
-                  </p>
-                </div>
-              </div>
-            ))}
+          {/* 5. General cleaner */}
+          <div className="font-poppins text-blue-900 mb-8">
+            <h1 className="font-bold text-5xl md:text-6xl">
+              General cleaner
+            </h1>
+            <p className="font-bold text-xl md:text-xl mt-2">
+              (multipurpose agent for parts)
+            </p>
           </div>
 
-          {/* Comparison Table */}
-          <section className="py-12">
-            <h2 className="font-poppins font-bold text-4xl md:text-5xl text-blue-900 mb-12 text-center">
-              {t('comparisonTitle')}
-            </h2>
-            <div className="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-3xl p-6 md:p-10 shadow-xl overflow-x-auto">
-              <table className="w-full min-w-[900px] text-left">
-                <thead className="border-b-2 border-blue-200">
-                  <tr className="text-blue-800 font-semibold uppercase text-sm">
-                    <th className="py-4 px-3">{t('table.product')}</th>
-                    <th className="py-4 px-3 text-center">{t('table.strength')}</th>
-                    <th className="py-4 px-3">{t('table.odor')}</th>
-                    <th className="py-4 px-3">{t('table.drying')}</th>
-                    <th className="py-4 px-3">{t('table.application')}</th>
-                  </tr>
-                </thead>
-                <tbody className="font-jakarta text-blue-900 divide-y divide-blue-100">
-                  {t.raw('products').map((p: any, i: number) => (
-                    <tr key={i} className="hover:bg-blue-50 transition">
-                      <td className="py-4 px-3 font-medium">{p.name}</td>
-                      <td className="py-4 px-3 text-center">{p.strength}</td>
-                      <td className="py-4 px-3">{p.odor}</td>
-                      <td className="py-4 px-3">{p.drying}</td>
-                      <td className="py-4 px-3">{p.app}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <p className="font-jakarta text-blue-700 text-sm mt-6">{t('table.note')}</p>
+          {/* Brake & Parts Cleaner C5 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center lg:order-2">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Brake & Parts Cleaner C5'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/Brake&PartsCleanerC5.jpg"
+                  alt="Brake & Parts Cleaner C5"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
+              </div>
             </div>
-          </section>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
+              <div className="space-y-6">
+                <h3 className="font-poppins font-semibold text-lg text-teal-700 mb-3">Brake & Parts Cleaner C5</h3>
+                <p className="font-jakarta text-teal-700 leading-relaxed">
+                  <strong>Features:</strong>
+                  These are designed to cleanse resin or metal powder from a brake drum and lining
+                  instead of blowing the powder or resin off. The cleaner offers high spray pressure
+                  and excellent degreasing effects as an outstanding oil and grease remover.<br /><br />
+                  <strong>Application:</strong>
+                  Degreasing and cleansing of general machine parts
+                  as well as brake drums, lining and disk pads
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Brake & Parts Cleaner Jumbo A */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center lg:order-2">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Brake & Parts Cleaner Jumbo A'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/Brake&PartsCleanerJumboA.jpg"
+                  alt="Brake & Parts Cleaner Jumbo A"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
+              </div>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-teal-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 lg:order-1">
+              <div className="space-y-6">
+                <h3 className="font-poppins font-semibold text-lg text-teal-700">Brake & Parts Cleaner Jumbo A</h3>
+                {/* Add description if available */}
+              </div>
+            </div>
+          </div>
+
+          {/* Parts Cleaner C7 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+              <div
+                className="relative group w-80 h-80 cursor-pointer"
+                onClick={() => callMascot(recommendations['Parts Cleaner C7'])}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-red-400 to-pink-300 rounded-full blur-lg opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/images/CleaningAgents/PartsCleanerC7.jpg"
+                  alt="Parts Cleaner C7"
+                  width={320}
+                  height={320}
+                  className="relative rounded-full border-8 border-white shadow-2xl object-contain bg-white w-full h-full group-hover:scale-105 transition duration-300"
+                />
+              </div>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-xl border border-red-200 rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <h2 className="font-poppins font-bold text-2xl text-red-800 mb-6">
+                Parts Cleaner C7
+              </h2>
+              <p className="font-jakarta text-red-700 leading-relaxed">
+                <strong>Features:</strong> With the strong dissolving power, high spray pressure and degreasing
+                effect, this can clean tough dirt that has accumulated for a long period of
+                time.<br /><br />
+                <strong>Application:</strong>Cleansing parts when an engine is dismantled or machine parts with
+                tough dirt
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* CTA & Back */}
+      {/* Summary Table Section */}
+      <div className="pt-12 px-5 md:px-20">
+        <h2 className="font-poppins font-bold text-4xl md:text-5xl text-blue-900 mb-12 text-center">
+          Product Comparison
+        </h2>
+        
+        <div className="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-3xl p-6 md:p-10 shadow-xl overflow-x-auto">
+          <table className="w-full min-w-[900px] text-left table-auto">
+            <thead className="border-b-2 border-blue-200">
+              <tr className="text-blue-800 font-semibold uppercase text-sm">
+                <th className="py-4 px-3">Product name</th>
+                <th className="py-4 px-3 text-center">Cleansing effectiveness *1</th>
+                <th className="py-4 px-3">Odor</th>
+                <th className="py-4 px-3">Drying speed</th>
+                <th className="py-4 px-3">Major application</th>
+              </tr>
+            </thead>
+            <tbody className="font-jakarta text-blue-900 divide-y divide-blue-100">
+              <tr className="hover:bg-green-50 transition-colors">
+                <td className="py-4 px-3 font-medium">GP Cleaner</td>
+                <td className="py-4 px-3 text-center">7</td>
+                <td className="py-4 px-3">Weak</td>
+                <td className="py-4 px-3">Fast</td>
+                <td className="py-4 px-3">Multipurpose</td>
+              </tr>
+              <tr className="hover:bg-green-50 transition-colors">
+                <td className="py-4 px-3 font-medium">GP Cleaner C-Y</td>
+                <td className="py-4 px-3 text-center">7</td>
+                <td className="py-4 px-3">Weak</td>
+                <td className="py-4 px-3">Fast</td>
+                <td className="py-4 px-3">Multipurpose (chemical attack resistant)</td>
+              </tr>
+              <tr className="hover:bg-green-50 transition-colors">
+                <td className="py-4 px-3 font-medium">GP Cleaner C-Y2</td>
+                <td className="py-4 px-3 text-center">7</td>
+                <td className="py-4 px-3">Weak</td>
+                <td className="py-4 px-3">Fast</td>
+                <td className="py-4 px-3">Multipurpose (chemical attack resistant)</td>
+              </tr>
+              <tr className="hover:bg-yellow-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Ace Cleaner C3</td>
+                <td className="py-4 px-3 text-center">8</td>
+                <td className="py-4 px-3">Middle</td>
+                <td className="py-4 px-3">Middle</td>
+                <td className="py-4 px-3">Degreasing and cleansing molds and other general parts</td>
+              </tr>
+              <tr className="hover:bg-red-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Mold Cleaner</td>
+                <td className="py-4 px-3 text-center">-</td>
+                <td className="py-4 px-3">Weak</td>
+                <td className="py-4 px-3">Extremely slow</td>
+                <td className="py-4 px-3">Cleansing plastic dirt on molds</td>
+              </tr>
+              <tr className="hover:bg-teal-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Depo Cleaner</td>
+                <td className="py-4 px-3 text-center">-</td>
+                <td className="py-4 px-3">Strong</td>
+                <td className="py-4 px-3">Extremely slow</td>
+                <td className="py-4 px-3">Cleansing mold deposit and plastic dirt</td>
+              </tr>
+              <tr className="hover:bg-teal-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Brake & Parts Cleaner C5</td>
+                <td className="py-4 px-3 text-center">8</td>
+                <td className="py-4 px-3">Middle</td>
+                <td className="py-4 px-3">Fast</td>
+                <td className="py-4 px-3">For break and other general parts</td>
+              </tr>
+              <tr className="hover:bg-teal-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Brake & Parts Cleaner Jumbo A</td>
+                <td className="py-4 px-3 text-center">8</td>
+                <td className="py-4 px-3">Middle</td>
+                <td className="py-4 px-3">Fast</td>
+                <td className="py-4 px-3">For break and other general parts</td>
+              </tr>
+              <tr className="hover:bg-red-50 transition-colors">
+                <td className="py-4 px-3 font-medium">Parts Cleaner C7 10</td>
+                <td className="py-4 px-3 text-center">10</td>
+                <td className="py-4 px-3">Strong</td>
+                <td className="py-4 px-3">Slow</td>
+                <td className="py-4 px-3">For general parts (powerful type)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="font-jakarta text-blue-700 text-sm mt-6">
+            *1. Relative comparison with our products on a scale of one (weakest) to ten (strongest)
+          </p>
+        </div>
+      </div>
+
+      {/* CTA */}
       <section className="text-center py-16 px-6">
-        <Link href="/law" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-jakarta font-medium px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition">
-          {t('cta')} <ChevronLeft className="w-5 h-5 rotate-180" />
-        </Link>
+        <div className="max-w-3xl mx-auto">
+          <Link
+            href="/law"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-jakarta font-medium px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+          >
+            View Safety Data (SDS)
+            <ChevronLeft className="w-5 h-5 rotate-180" />
+          </Link>
+        </div>
       </section>
 
-      <div className="text-center mt-12 pb-20">
-        <Link href="/" className="text-blue-600 hover:text-blue-500 font-jakarta text-sm flex items-center justify-center gap-1">
-          {t('backToHome')}
+      {/* Back to Top */}
+      <div className="text-center mt-12">
+        <Link
+          href="/"
+          className="text-blue-600 hover:text-blue-500 font-jakarta text-sm flex items-center justify-center gap-1"
+        >
+          Back to Home
         </Link>
       </div>
 
-      {/* Mascot */}
+      {/* Mascot - Bottom Center */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
-        <div className={`relative transition-all duration-700 ease-in-out ${showMascot.any ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-32 opacity-0 scale-90 pointer-events-none'}`}>
+        <div
+          className={`relative transition-all duration-700 ease-in-out transform-gpu ${
+            showMascot.any
+              ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+              : 'translate-y-32 opacity-0 scale-90 pointer-events-none'
+          }`}
+        >
+          {/* Speech Bubble */}
           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-80">
             <div className="bg-white rounded-3xl px-6 py-4 shadow-2xl border-4 border-blue-400">
-              <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">{displayedText}</p>
+              <p className="font-jakarta font-bold text-center text-blue-900 leading-tight">
+                {displayedText}
+              </p>
             </div>
             <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
               <div className="w-8 h-8 bg-white rotate-45 border-r-4 border-b-4 border-blue-400"></div>
             </div>
           </div>
-          <Image src="/images/mascot.png" alt="Mascot" width={280} height={280}
-            className="drop-shadow-2xl cursor-pointer animate-float" onClick={hideMascot} />
+
+          {/* Mascot Image */}
+          <Image
+            src="/images/mascot.png"
+            alt="Mascot"
+            width={280}
+            height={280}
+            className="drop-shadow-2xl cursor-pointer animate-float"
+            onClick={hideMascot}
+          />
         </div>
       </div>
 
+      {/* Floating Animation */}
       <style jsx>{`
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
